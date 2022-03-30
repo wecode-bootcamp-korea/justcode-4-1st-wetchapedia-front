@@ -1,6 +1,6 @@
-import Footer from '../../components/Footer/Footer';
+import Ad from '../Detail/Ad/Ad';
 
 function Main() {
-  return <Footer />;
+  return <Ad />;
 }
 export default Main;
