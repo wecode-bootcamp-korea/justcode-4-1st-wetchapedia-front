@@ -1,0 +1,63 @@
+.Gallery {
+  height: 180px;
+  width: 320px;
+  border: 1px solid rgb(227, 227, 227);
+  border-radius: 6px;
+  position: relative;
+}
+.GalleryTitle {
+  padding: 20px 0 0 20px;
+  font-size: 19px;
+  font-weight: 700;
+}
+.ImageSection {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+
+.ImageSection::-webkit-scrollbar {
+  display: none;
+}
+
+.Images {
+  width: 140px;
+  padding: 15px;
+}
+.ChevronLeft {
+  position: absolute;
+  top: 90px;
+  font-size: 30px;
+  background-color: #cdcdcf;
+  border-radius: 50%;
+  color: white;
+}
+.ChevronLeft:hover {
+  background-color: brown;
+  cursor: pointer;
+}
+.ChevronRight {
+  position: absolute;
+  top: 90px;
+  right: 0px;
+  font-size: 30px;
+  background-color: #cdcdcf;
+  border-radius: 50%;
+  color: white;
+}
+.ChevronRight:hover {
+  background-color: brown;
+  cursor: pointer;
+}
+.modalSection {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  opacity: 0.6;
+  background-color: black;
+}
+
+// 제 스크롤도 좀 해결해주세요

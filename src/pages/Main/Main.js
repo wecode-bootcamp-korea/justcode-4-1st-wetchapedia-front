@@ -1,6 +1,6 @@
-import Ad from '../Detail/Ad/Ad';
+import Gallery from '../Detail/Gallery/Gallery';
 
 function Main() {
-  return <Ad />;
+  return <Gallery />;
 }
 export default Main;
