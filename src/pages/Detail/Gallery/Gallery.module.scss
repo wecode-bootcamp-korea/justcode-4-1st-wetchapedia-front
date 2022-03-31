@@ -1,0 +1,95 @@
+//드래그 방지
+.GalleryTotal {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.Gallery {
+  position: relative;
+  height: 180px;
+  width: 320px;
+  border: 1px solid rgb(227, 227, 227);
+  border-radius: 6px;
+}
+.GalleryTitle {
+  padding: 20px 0 0 20px;
+  font-size: 19px;
+  font-weight: 700;
+}
+.ImageSection {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+
+.ImageSection::-webkit-scrollbar {
+  display: none;
+}
+
+.Images {
+  width: 140px;
+  padding: 15px;
+  cursor: pointer;
+}
+.ChevronLeft {
+  position: absolute;
+  background-color: #cdcdcf;
+  border-radius: 50%;
+  color: white;
+  top: 90px;
+  font-size: 30px;
+}
+.ChevronLeft:hover {
+  background-color: brown;
+  cursor: pointer;
+}
+.ChevronRight {
+  position: absolute;
+  top: 90px;
+  right: 0px;
+  background-color: #cdcdcf;
+  border-radius: 50%;
+  font-size: 30px;
+  color: white;
+}
+.ChevronRight:hover {
+  background-color: brown;
+  cursor: pointer;
+}
+.modalSection {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+.bigImage {
+  width: 60vw;
+  border-radius: 12px;
+}
+.modalChevronLeft {
+  position: fixed;
+  background-color: #434349;
+  border-radius: 50%;
+  color: white;
+  font-size: 36px;
+  top: 500px;
+  left: 50px;
+  cursor: pointer;
+}
+.modalChevronRight {
+  position: fixed;
+  background-color: #434349;
+  border-radius: 50%;
+  color: white;
+  font-size: 36px;
+  top: 500px;
+  right: 50px;
+  cursor: pointer;
+}
