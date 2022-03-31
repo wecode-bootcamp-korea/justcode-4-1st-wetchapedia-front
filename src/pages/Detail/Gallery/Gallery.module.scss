@@ -1,9 +1,16 @@
+//드래그 방지
+.GalleryTotal {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .Gallery {
+  position: relative;
   height: 180px;
   width: 320px;
   border: 1px solid rgb(227, 227, 227);
   border-radius: 6px;
-  position: relative;
 }
 .GalleryTitle {
   padding: 20px 0 0 20px;
@@ -23,14 +30,15 @@
 .Images {
   width: 140px;
   padding: 15px;
+  cursor: pointer;
 }
 .ChevronLeft {
   position: absolute;
-  top: 90px;
-  font-size: 30px;
   background-color: #cdcdcf;
   border-radius: 50%;
   color: white;
+  top: 90px;
+  font-size: 30px;
 }
 .ChevronLeft:hover {
   background-color: brown;
@@ -40,9 +48,9 @@
   position: absolute;
   top: 90px;
   right: 0px;
-  font-size: 30px;
   background-color: #cdcdcf;
   border-radius: 50%;
+  font-size: 30px;
   color: white;
 }
 .ChevronRight:hover {
@@ -51,13 +59,37 @@
 }
 .modalSection {
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 99;
-  opacity: 0.6;
-  background-color: black;
+  z-index: 1;
 }
-
-// 제 스크롤도 좀 해결해주세요
+.bigImage {
+  width: 60vw;
+  border-radius: 12px;
+}
+.modalChevronLeft {
+  position: fixed;
+  background-color: #434349;
+  border-radius: 50%;
+  color: white;
+  font-size: 36px;
+  top: 500px;
+  left: 50px;
+  cursor: pointer;
+}
+.modalChevronRight {
+  position: fixed;
+  background-color: #434349;
+  border-radius: 50%;
+  color: white;
+  font-size: 36px;
+  top: 500px;
+  right: 50px;
+  cursor: pointer;
+}

@@ -11,20 +11,52 @@ function Gallery() {
   const [images, setImages] = useState([]);
   const [scrollX, setScrollX] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imgUrls, setImgUrls] = useState([]);
+  const [imgIndex, setImgIndex] = useState(0);
+  const [leftshow, setLeftShow] = useState(false);
+  const [rightshow, setRightShow] = useState(false);
   const Section = useRef();
 
   const setCursor = event => {
     setScrollX(event.target.scrollLeft);
   };
+
   const moveLeft = scrollOffset => {
     Section.current.scrollLeft += scrollOffset;
   };
+
   const modal = imgUrl => {
     if (imgUrl) {
+      setImgUrls(imgUrl[0]);
       setIsModalOpen(true);
+      setImgIndex(imgUrl[1]);
     }
-    console.log(isModalOpen);
   };
+  let totalimageindex = imgIndex;
+  const modalFalse = () => {
+    setIsModalOpen(false);
+  };
+  const notClick = event => {
+    event.stopPropagation();
+  };
+  const LeftPage = event => {
+    event.stopPropagation();
+    setImgIndex(imgIndex - 1);
+    totalimageindex -= 1;
+    setImgUrls(images[totalimageindex].imgUrl);
+  };
+  const RightPage = event => {
+    event.stopPropagation();
+    setImgIndex(imgIndex + 1);
+    totalimageindex = totalimageindex + 1;
+    setImgUrls(images[totalimageindex].imgUrl);
+  };
+  useEffect(() => {
+    totalimageindex === 0 ? setLeftShow(true) : setLeftShow(false);
+    totalimageindex === images.length - 1
+      ? setRightShow(true)
+      : setRightShow(false);
+  }, [imgIndex]);
   useEffect(() => {
     fetch('/data/Images.json', {
       method: 'GET',
@@ -36,7 +68,7 @@ function Gallery() {
   }, []);
 
   return (
-    <>
+    <div className={styles.GalleryTotal}>
       <div className={styles.Gallery}>
         <div className={styles.GalleryTitle}>갤러리</div>
         <div className={styles.ImageSection} onScroll={setCursor} ref={Section}>
@@ -44,7 +76,7 @@ function Gallery() {
             return (
               <GalleryImages
                 key={comment.id}
-                id={comment.id}
+                index={comment.id}
                 img={comment.imgUrl}
                 name={comment.name}
                 modal={modal}
@@ -67,8 +99,29 @@ function Gallery() {
           />
         )}
       </div>
-      {isModalOpen && <div className={styles.modalSection}>sdfsdf</div>}
-    </>
+      {isModalOpen && (
+        <div className={styles.modalSection} onClick={modalFalse}>
+          <img
+            src={imgUrls}
+            alt="Gallery"
+            className={styles.bigImage}
+            onClick={notClick}
+          />
+          <FontAwesomeIcon
+            icon={faCircleChevronLeft}
+            className={styles.modalChevronLeft}
+            onClick={LeftPage}
+            style={{ display: leftshow ? 'none' : 'block' }}
+          />
+          <FontAwesomeIcon
+            icon={faCircleChevronRight}
+            className={styles.modalChevronRight}
+            onClick={RightPage}
+            style={{ display: rightshow ? 'none' : 'block' }}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 export default Gallery;
