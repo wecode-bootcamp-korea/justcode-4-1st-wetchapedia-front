@@ -1,0 +1,63 @@
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 9vh;
+
+  padding: 0 50px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.logoWrapper {
+  height: 100%;
+  border: none;
+  padding: 17px;
+}
+
+.logo {
+  height: 100%;
+  cursor: pointer;
+}
+
+.component_wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+}
+
+.searchBar_wrapper {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  padding: 10px;
+  background-color: #f5f5f7;
+  cursor: pointer;
+}
+
+.searchBar__icon {
+  padding-right: 5px;
+  color: #c8c8cf;
+}
+
+.navBar__searchBar {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+.navBar__signInBtn {
+  border: none;
+  margin: 0 15px;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.navBar__signUpBtn {
+  padding: 0 15px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  cursor: pointer;
+}
