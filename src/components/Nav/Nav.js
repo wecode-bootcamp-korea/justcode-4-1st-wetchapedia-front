@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from './Nav.module.scss';
-import Login from '../Login_popUp/Login';
-import SignUp from '../Signup_popUp/SignUp';
+import Login from '../Login_popup/Login';
+import SignUp from '../Signup_popup/SignUp';
+import disableScroll from 'disable-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,18 +12,22 @@ function Nav() {
 
   const openLogin = () => {
     setLoginOpen(true);
+    disableScroll.on();
   };
 
   const closeLogin = () => {
     setLoginOpen(false);
+    disableScroll.off();
   };
 
   const openSignUp = () => {
     setSignUpOpen(true);
+    disableScroll.on();
   };
 
   const closeSignUp = () => {
     setSignUpOpen(false);
+    disableScroll.off();
   };
 
   return (
