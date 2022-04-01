@@ -10,6 +10,7 @@ import {
 function Gallery() {
   const [images, setImages] = useState([]);
   const [scrollX, setScrollX] = useState(0);
+  const [scrollEnd, setScrollEnd] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imgUrls, setImgUrls] = useState([]);
   const [imgIndex, setImgIndex] = useState(0);
@@ -19,6 +20,7 @@ function Gallery() {
 
   const setCursor = event => {
     setScrollX(event.target.scrollLeft);
+    setScrollEnd(event.target.scrollWidth - event.target.clientWidth);
   };
 
   const moveLeft = scrollOffset => {
@@ -43,13 +45,13 @@ function Gallery() {
     event.stopPropagation();
     setImgIndex(imgIndex - 1);
     totalimageindex -= 1;
-    setImgUrls(images[totalimageindex].imgUrl);
+    setImgUrls(images[totalimageindex].poster_url);
   };
   const RightPage = event => {
     event.stopPropagation();
     setImgIndex(imgIndex + 1);
     totalimageindex = totalimageindex + 1;
-    setImgUrls(images[totalimageindex].imgUrl);
+    setImgUrls(images[totalimageindex].poster_url);
   };
   useEffect(() => {
     totalimageindex === 0 ? setLeftShow(true) : setLeftShow(false);
@@ -77,7 +79,7 @@ function Gallery() {
               <GalleryImages
                 key={comment.id}
                 index={comment.id}
-                img={comment.imgUrl}
+                img={comment.poster_url}
                 name={comment.name}
                 modal={modal}
               />
@@ -91,7 +93,7 @@ function Gallery() {
             onClick={() => moveLeft(-345)}
           />
         )}
-        {scrollX === 1210 ? null : (
+        {scrollX >= scrollEnd ? null : (
           <FontAwesomeIcon
             icon={faCircleChevronRight}
             className={styles.ChevronRight}

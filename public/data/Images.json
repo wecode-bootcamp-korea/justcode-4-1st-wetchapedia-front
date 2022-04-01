@@ -1,47 +1,47 @@
 [
   {
     "id": 0,
-    "imgUrl": "/images/fullstack4_1.jpg",
+    "poster_url": "/images/fullstack4_1.jpg",
     "name": "godgod"
   },
   {
     "id": 1,
-    "imgUrl": "/images/fullstack4_2.jpg",
+    "poster_url": "/images/fullstack4_2.jpg",
     "name": "godgod"
   },
   {
     "id": 2,
-    "imgUrl": "/images/fullstack4_3.jpg",
+    "poster_url": "/images/fullstack4_3.jpg",
     "name": "godgod"
   },
   {
     "id": 3,
-    "imgUrl": "/images/fullstack4_4.jpg",
+    "poster_url": "/images/fullstack4_4.jpg",
     "name": "godgod"
   },
   {
     "id": 4,
-    "imgUrl": "/images/fullstack4_5.png",
+    "poster_url": "/images/fullstack4_5.png",
     "name": "godgod"
   },
   {
     "id": 5,
-    "imgUrl": "/images/fullstack4_6.jpg",
+    "poster_url": "/images/fullstack4_6.jpg",
     "name": "godgod"
   },
   {
     "id": 6,
-    "imgUrl": "/images/fullstack4_7.jpg",
+    "poster_url": "/images/fullstack4_7.jpg",
     "name": "godgod"
   },
   {
     "id": 7,
-    "imgUrl": "/images/fullstack4_8.jpg",
+    "poster_url": "/images/fullstack4_8.jpg",
     "name": "godgod"
   },
   {
     "id": 8,
-    "imgUrl": "/images/fullstack4_9.jpg",
+    "poster_url": "/images/fullstack4_9.jpg",
     "name": "godgod"
   }
 ]
