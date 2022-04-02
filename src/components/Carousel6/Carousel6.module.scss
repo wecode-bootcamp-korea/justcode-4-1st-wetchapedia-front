@@ -1,0 +1,152 @@
+.carouselComp {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  margin: 0 1vw;
+}
+
+.CategoryTitle {
+  display: flex;
+  font-size: 30px;
+  width: 100%;
+  margin: 2vw 2vw 1vw 0;
+}
+
+.topSlider {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+}
+
+.topSlider::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
+.bottomSlider {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  margin-bottom: 2vw;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+}
+
+.bottomSlider::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
+.posterArea {
+  display: flex;
+  flex-direction: column;
+  width: 13.4rem;
+  margin-right: 1.7vw;
+}
+
+.posterImg {
+  aspect-ratio: 1/1.45;
+  object-fit: cover;
+  object-position: center;
+  width: 13.4rem;
+  border-radius: 3px;
+  border: 0.5px solid rgb(204, 204, 204);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 13.4rem;
+  padding-top: 0.2vw;
+}
+
+.movieName {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  padding: 0.7vw 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ratings {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  color: rgb(98, 98, 98);
+}
+
+.icon {
+  display: flex;
+  font-size: 0.6rem;
+  color: rgb(98, 98, 98);
+}
+
+.topLeft {
+  float: left;
+  position: inherit;
+  top: 50%;
+  font-size: 1.6rem;
+  color: white;
+  background-color: rgb(195, 193, 193);
+  border-radius: 1rem;
+}
+
+.topLeft:hover {
+  background-color: black;
+  cursor: pointer;
+}
+
+.topRight {
+  float: right;
+  position: absolute;
+  top: 28vh;
+  right: 0vh;
+  font-size: 1.6rem;
+  color: white;
+  background-color: rgb(195, 193, 193);
+  border-radius: 1rem;
+}
+
+.topRight:hover {
+  background-color: black;
+  cursor: pointer;
+}
+
+.bottomLeft {
+  float: left;
+  position: absolute;
+  bottom: 14vh;
+  font-size: 1.6rem;
+  color: white;
+  background-color: rgb(195, 193, 193);
+  border-radius: 1rem;
+}
+
+.bottomLeft:hover {
+  background-color: black;
+  cursor: pointer;
+}
+
+.bottomRight {
+  float: right;
+  position: absolute;
+  bottom: 14vh;
+  right: 0vh;
+  font-size: 1.6rem;
+  color: white;
+  background-color: rgb(195, 193, 193);
+  border-radius: 1rem;
+}
+
+.bottomRight:hover {
+  background-color: black;
+  cursor: pointer;
+}
