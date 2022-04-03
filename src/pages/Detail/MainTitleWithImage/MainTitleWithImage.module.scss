@@ -165,14 +165,21 @@
   width: 50%;
   height: auto;
   border: 1px solid orange;
-  padding-top: 2.5%;
 }
 
 .wantToWrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 20%;
+  height: 40%;
+  margin-top: 4%;
+  border: 1px solid red;
+}
+
+.wantToWrapper:hover {
+  cursor: pointer;
 }
 
 .wantTo {
@@ -186,19 +193,34 @@
   display: flex;
   flex-wrap: wrap;
   font-size: 130%;
+  transition: all 0.2s ease-in-out;
+}
+
+.notYet:hover {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 130%;
+  transition: all 0.3s ease-in-out;
+  transform: scale(1.3);
 }
 
 .yesPlease {
   display: flex;
   flex-wrap: wrap;
-  // width: 100%;
 }
 
 .commentWrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  height: 40%;
   width: 15%;
+  margin-top: 4%;
+}
+
+.commentWrapper:hover {
+  cursor: pointer;
 }
 
 .comment {
