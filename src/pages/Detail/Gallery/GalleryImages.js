@@ -8,7 +8,7 @@ function GalleryImages(props) {
       src={props.img}
       alt={props.name}
       className={styles.Images}
-      onClick={() => props.modal(name)}
+      onClick={e => props.modal(name, e)}
     />
   );
 }

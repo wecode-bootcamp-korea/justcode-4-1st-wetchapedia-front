@@ -6,6 +6,7 @@ import {
   faCircleChevronLeft,
   faCircleChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
+import disableScroll from 'disable-scroll';
 
 function Gallery() {
   const [images, setImages] = useState([]);
@@ -29,13 +30,15 @@ function Gallery() {
 
   const modal = imgUrl => {
     if (imgUrl) {
+      document.body.style.overflow = 'hidden';
       setImgUrls(imgUrl[0]);
       setIsModalOpen(true);
       setImgIndex(imgUrl[1]);
     }
   };
   let totalimageindex = imgIndex;
-  const modalFalse = () => {
+  const modalFalse = e => {
+    document.body.style.overflow = 'unset';
     setIsModalOpen(false);
   };
   const notClick = event => {
