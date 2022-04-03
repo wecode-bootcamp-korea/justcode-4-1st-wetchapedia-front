@@ -1,0 +1,151 @@
+.wholeWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .imageWrapper {
+    display: inline;
+  }
+  
+  .movieSceneImage {
+    display: inline;
+    position: relative;
+    aspect-ratio: 1/0.25;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+  }
+  
+  .infoBlock {
+    display: block;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  
+  .poster {
+    display: inline-block;
+    // display: flex;
+    // flex-wrap: wrap;
+    position: absolute;
+    top: 23vw;
+    left: 16.5vw;
+    aspect-ratio: 1/1.45;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 3px;
+    border: 0.2em solid white;
+    box-shadow: 0 0 0.03em 0.03em grey;
+    width: 11%;
+  }
+  
+  .titlesAndIcons {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 0 3% 0 0;
+    padding-left: 30%;
+    padding-top: 1.4%;
+    padding-bottom: 2%;
+  }
+  
+  .movieTitle {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 2.3vw;
+    font-weight: bold;
+    padding-bottom: 1%;
+  }
+  
+  .movieInfo {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1.2vw;
+    padding-bottom: 1.2%;
+    color: rgb(131, 131, 131);
+  }
+  
+  .averageRating {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1.2vw;
+    padding: 1.2% 0;
+    margin-bottom: 1.2%;
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+    border-color: rgb(224, 224, 224);
+  }
+  
+  .starIcon {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 80%;
+  }
+  
+  .clickables {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  
+  .rating {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 20%;
+    object-fit: cover;
+    border: 1px solid red;
+    margin-bottom: 10px;
+  }
+  
+  .rateStars {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  //별 컴포넌트
+  .eachStars {
+    object-fit: cover;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .starStyle {
+    display: flex;
+    // flex-direction: row;
+    flex-wrap: wrap;
+    object-fit: cover;
+    width: 10%;
+    height: auto;
+  }
+  //컴포넌트 끝
+  
+  .icons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .wantTo {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .notYet {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .yesPlease {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .comment {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
