@@ -1,0 +1,67 @@
+.Carousel5Wrapper {
+  position: relative;
+  margin-top: 60px;
+  padding-left: 10px;
+  padding-right: 10px;
+  @media screen and (max-width: 900px) {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+.SliderWrapper {
+  white-space: nowrap;
+  position: relative;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  @media screen and (max-width: 900px) {
+    padding-left: 10px;
+  }
+}
+.SliderWrapper::-webkit-scrollbar {
+  display: none;
+}
+.Title {
+  font-size: 23px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  padding-top: 25px;
+  padding-left: 10px;
+}
+
+.DivForButton {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 300;
+  outline: none;
+  pointer-events: none;
+}
+
+.Button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+  border: 0px;
+  pointer-events: all;
+  background-color: white;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+
+  @media screen and (max-width: 900px) {
+    visibility: hidden;
+  }
+}
+
+.Hidden {
+  visibility: hidden;
+}
