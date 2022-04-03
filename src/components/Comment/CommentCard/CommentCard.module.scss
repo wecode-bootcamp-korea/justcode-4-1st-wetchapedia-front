@@ -1,7 +1,5 @@
-* {
-  box-sizing: border-box;
-}
 .CommentCardWrapper {
+  box-sizing: border-box;
   display: inline-block;
   padding: 0 15px 0 15px;
   width: 45%;
@@ -14,10 +12,12 @@
   }
 }
 .Name {
+  box-sizing: border-box;
   font-size: 18px;
 }
 
 .NameAndWantsWrapper {
+  box-sizing: border-box;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -26,6 +26,7 @@
 }
 
 .CommentContentWrapper {
+  box-sizing: border-box;
   width: 100%;
   height: 120px;
   margin: 20px 0 20px;
@@ -36,6 +37,7 @@
 }
 
 .CommentLikeWrapper {
+  box-sizing: border-box;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -43,11 +45,13 @@
   margin: 15px 0 15px;
 }
 .LikeButton {
+  box-sizing: border-box;
   color: rgb(252, 14, 91);
   font-size: 18px;
 }
 
 .Want {
+  box-sizing: border-box;
   text-align: center;
   padding: 6px 11px 6px 11px;
   background-color: white;
@@ -56,15 +60,18 @@
 }
 
 .Rating {
+  box-sizing: border-box;
 }
 
 .LikeCount {
+  box-sizing: border-box;
   color: rgb(101, 101, 101);
   font-size: 13px;
   margin-top: 0.3em;
 }
 
 .Line {
+  box-sizing: border-box;
   width: 100%;
   height: 1px;
   background-color: rgb(220, 220, 220);
