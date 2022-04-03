@@ -63,7 +63,6 @@
   border-radius: 50%;
   background-color: white;
   border: none;
-  box-shadow: 4px 0px 4px 4px rgba(0, 0, 0, 0.2);
   color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
   &:hover {
@@ -72,9 +71,11 @@
 }
 .collection__prevBtn {
   left: 50px;
+  box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
 .collection__nextBtn {
   right: 50px;
+  box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
 .collection__card__title {
   margin-top: 10px;

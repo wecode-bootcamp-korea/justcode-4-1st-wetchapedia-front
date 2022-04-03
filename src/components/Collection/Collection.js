@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import React from 'react';
 import styles from './Collection.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,34 +8,45 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 function Collection() {
-  // const [slideSpot, setSlideSpot] = useState();
+  const [scrollX, setScrollX] = useState(0);
+  const [slideWidth, setSlideWidth] = useState(0);
+
   const containerRef = useRef();
   const innerRef = useRef();
 
-  function handlePrevBnt() {
-    const slideWidth = containerRef.current.offsetWidth;
-    innerRef.current.scrollBy(-slideWidth, 0);
+  function handleScrollX(event) {
+    setScrollX(event.target.scrollLeft);
+    setSlideWidth(event.target.scrollWidth - event.target.offsetWidth);
   }
+
+  function handlePrevBnt() {
+    innerRef.current.scrollBy(-containerRef.current.offsetWidth, 0);
+  }
+
   function handleNextBtn() {
-    const slideWidth = containerRef.current.offsetWidth;
-    innerRef.current.scrollBy(slideWidth, 0);
+    innerRef.current.scrollBy(containerRef.current.offsetWidth, 0);
   }
 
   return (
     <div className={`Collection ${styles.collection}`}>
       <h1 className={styles.collection__title}>위챠피디아 컬렉션</h1>
-
-      <button
-        className={`${styles.collection__btn} ${styles.collection__prevBtn}`}
-        onClick={handlePrevBnt}
-      >
-        <FontAwesomeIcon
-          icon={faChevronLeft}
-          className={styles.collection__btn__icons}
-        />
-      </button>
+      {scrollX >= 1 ? (
+        <button
+          className={`${styles.collection__btn} ${styles.collection__prevBtn}`}
+          onClick={handlePrevBnt}
+        >
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className={styles.collection__btn__icons}
+          />
+        </button>
+      ) : null}
       <div className={styles.collection__container} ref={containerRef}>
-        <section className={styles.collection__inner} ref={innerRef}>
+        <section
+          className={styles.collection__inner}
+          onScroll={handleScrollX}
+          ref={innerRef}
+        >
           <div className={styles.collection__card}>
             <section className={styles.collection__imgBoxContainer}>
               <div className={styles.collection__imgBox}>
@@ -158,15 +169,17 @@ function Collection() {
           </div>
         </section>
       </div>
-      <button
-        className={`${styles.collection__btn} ${styles.collection__nextBtn}`}
-        onClick={handleNextBtn}
-      >
-        <FontAwesomeIcon
-          icon={faChevronRight}
-          className={styles.collection__nexBtn__icons}
-        />
-      </button>
+      {scrollX !== slideWidth || scrollX === 0 ? (
+        <button
+          className={`${styles.collection__btn} ${styles.collection__nextBtn}`}
+          onClick={handleNextBtn}
+        >
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            className={styles.collection__nexBtn__icons}
+          />
+        </button>
+      ) : null}
     </div>
   );
 }
