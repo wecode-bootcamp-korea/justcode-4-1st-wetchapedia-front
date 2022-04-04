@@ -1,7 +1,5 @@
-* {
-  box-sizing: border-box;
-}
 .MovieCardWrapper {
+  box-sizing: border-box;
   display: inline-block;
   padding: 8px;
   width: 20%;
@@ -14,6 +12,7 @@
 }
 
 .PosterBox {
+  box-sizing: border-box;
   position: relative;
   left: 0;
   top: 0;
@@ -23,10 +22,12 @@
   border: solid rgb(230, 230, 230) 1px;
 }
 .PosterImage {
+  box-sizing: border-box;
   display: block;
   width: 100%;
 }
 .MovieInfoWrapper {
+  box-sizing: border-box;
   width: 100%;
   padding-top: 5px;
   > div {
@@ -34,19 +35,23 @@
   }
 }
 .MovieInfoTitle {
+  box-sizing: border-box;
   font-size: 18px;
   font-weight: bold;
 }
 .MovieInfoSubWrapper {
+  box-sizing: border-box;
   font-size: 15px;
 }
 .MovieInfoRating {
+  box-sizing: border-box;
   font-size: 15px;
   padding-top: 3px;
   color: rgb(67, 68, 82);
 }
 
 .SequenceNumberBox {
+  box-sizing: border-box;
   position: absolute;
   border-radius: 5px;
   font-size: 18px;
