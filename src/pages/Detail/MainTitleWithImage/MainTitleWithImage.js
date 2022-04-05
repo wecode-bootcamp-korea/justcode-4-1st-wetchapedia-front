@@ -5,8 +5,11 @@ import {
   faPlus,
   faBookmark,
   faPencil,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState, useRef, useEffect } from 'react';
+import CommentDelete from './CommentDeleteModal';
+import CommentEditComponent from './CommentEditComponent';
 // import RatingsCard from './RatingsCard';
 
 function MainTitleWithImage() {
@@ -17,6 +20,22 @@ function MainTitleWithImage() {
   const [rating, setRating] = useState(0);
   const [want, setWant] = useState(false);
   const [howWasIt, setHowWasIt] = useState('평가하기');
+  const [wantHover, setWantHover] = useState(false);
+  const [commentHover, setCommentHover] = useState(false);
+  const [commentEdit, setCommentEdit] = useState(false);
+
+  // const starRef = useRef(null);
+  // const commentRef = useRef(false);
+
+  const commentEditOpen = () => {
+    console.log('true');
+    setCommentEdit(true);
+  };
+
+  const commentEditClose = () => {
+    console.log('false');
+    setCommentEdit(false);
+  };
 
   useEffect(() => {
     if (rating == 0) {
@@ -53,6 +72,7 @@ function MainTitleWithImage() {
       return setHowWasIt('최고에요!');
     }
   }, [rating]);
+
   // useEffect(() => {
   //   fetch('/data/ratingStars.json')
   //     .then(res => res.json())
@@ -212,15 +232,49 @@ function MainTitleWithImage() {
             </div>
             {/* 별 하드코딩 끝 */}
             <div className={styles.icons}>
-              <div className={styles.wantToWrapper}>
-                <FontAwesomeIcon icon={faPlus} className={styles.notYet} />
+              <div
+                className={styles.wantToWrapper}
+                onMouseEnter={() => setWantHover(true)}
+                onMouseLeave={() => setWantHover(false)}
+                onClick={
+                  want === true ? () => setWant(false) : () => setWant(true)
+                }
+              >
+                <FontAwesomeIcon
+                  icon={want === true ? faBookmark : faPlus}
+                  className={
+                    want === true
+                      ? wantHover === true
+                        ? styles.yesPleaseHover
+                        : styles.yesPlease
+                      : wantHover === true
+                      ? styles.notYetHover
+                      : styles.notYet
+                  }
+                />
                 {/* <FontAwesomeIcon icon={faBookmark} className={styles.yesPlease} /> 눌렀을때 리본으로 변경 */}
                 <p className={styles.wantTo}> 보고싶어요</p>
               </div>
-              <div className={styles.commentWrapper}>
-                <FontAwesomeIcon icon={faPencil} className={styles.notYet} />
+              <div
+                className={styles.commentWrapper}
+                onMouseEnter={() => setCommentHover(true)}
+                onMouseLeave={() => setCommentHover(false)}
+                onClick={
+                  commentEdit === true ? commentEditClose : commentEditOpen
+                }
+              >
+                <FontAwesomeIcon
+                  icon={faPencil}
+                  className={
+                    commentHover === true ? styles.notYetHover : styles.notYet
+                  }
+                />
                 <p className={styles.comment}> 코멘트</p>
               </div>
+              <CommentEditComponent
+                open={commentEdit}
+                close={commentEditClose}
+              />
             </div>
           </article>
         </section>
