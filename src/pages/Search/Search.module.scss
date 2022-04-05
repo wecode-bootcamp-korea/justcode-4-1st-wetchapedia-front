@@ -1,0 +1,30 @@
+.SearchMovie {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 100px;
+  width: 100%;
+  margin: auto;
+}
+.SearchMovieTilte {
+  font-size: 18px;
+  font-weight: 700;
+  color: #74747b;
+  padding-left: 150px;
+}
+.SearchList {
+  float: center;
+}
+
+.SearchSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding-left: 150px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.SearchSectionImg {
+  width: 250px;
+  height: 350px;
+}
