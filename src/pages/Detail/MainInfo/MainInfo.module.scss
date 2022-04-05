@@ -37,6 +37,7 @@
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 .actor__content {
+  position: relative;
   overflow: hidden;
   ::-webkit-scrollbar {
     display: none;
@@ -49,43 +50,6 @@
   flex-flow: column wrap;
   overflow: auto;
   margin-bottom: 12px;
-}
-
-.actor__list {
-  display: flex;
-  align-items: center;
-  height: 76px;
-  width: 50%;
-  padding-right: 15px;
-  &:nth-child(3n) .actor__list__text {
-    border-bottom: none;
-  }
-}
-
-.actor__list__imgBox {
-  width: 56px;
-  height: 56px;
-  background-color: black;
-  margin-right: 12px;
-  border-radius: 10px;
-}
-.actor__list__text {
-  display: flex;
-  flex: 1 1 0%;
-  flex-direction: column;
-  justify-content: center;
-  margin-right: 10px;
-  height: 100%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.actor__text__name {
-  font-size: 17px;
-}
-
-.actor__list__text__role {
-  font-size: 14px;
-  margin-top: 4px;
 }
 
 .info__graph {
@@ -111,4 +75,30 @@
 .header__title {
   font-size: 19px;
   font-weight: 700;
+}
+
+//버튼
+.ul__btn {
+  position: absolute;
+  top: 40%;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  &:hover {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.ul__prevBtn {
+  left: 10px;
+  box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.ul__nextBtn {
+  right: 10px;
+  box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }

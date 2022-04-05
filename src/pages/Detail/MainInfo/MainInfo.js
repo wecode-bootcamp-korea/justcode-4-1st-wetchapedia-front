@@ -1,9 +1,43 @@
 import styles from './MainInfo.module.scss';
-// import GalleryImages from './GalleryImages';
-// import { useEffect, useState, useRef } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ProductionList from './ProductionList';
+import { useState, useEffect, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 function MainInfo() {
+  const [profileList, setProfileList] = useState([]);
+  const [scrollX, setScrollX] = useState(0);
+  const [slideWidth, setSlideWidth] = useState(0);
+
+  const containerRef = useRef();
+  const innerRef = useRef();
+
+  useEffect(() => {
+    fetch('/data/production.json', {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(data => {
+        setProfileList(data);
+      });
+  });
+
+  function handleScrollX(event) {
+    setScrollX(event.target.scrollLeft);
+    setSlideWidth(event.target.scrollWidth - event.target.offsetWidth);
+  }
+
+  function handlePrevBtn() {
+    innerRef.current.scrollBy(-containerRef.current.offsetWidth, 0);
+  }
+
+  function handleNextBtn() {
+    innerRef.current.scrollBy(containerRef.current.offsetWidth, 0);
+  }
+
   return (
     <div className="MainInfo">
       <div className={styles.info__wrapper}>
@@ -28,90 +62,35 @@ function MainInfo() {
           <header className={`${styles.actor__header} ${styles.header__title}`}>
             출연/제작
           </header>
-          <div className={styles.actor__content}>
-            <ul className={styles.actor__ul}>
-              <li className={styles.actor__list}>
-                <div className={styles.actor__list__imgBox} />
-                <div className={styles.actor__list__text}>
-                  <p className={styles.actor__list__text__name}>
-                    크리스 콜럼버스
-                  </p>
-                  <p className={styles.actor__list__text__role}>감독</p>
-                </div>
-              </li>
-              <li className={styles.actor__list}>
-                <div className={styles.actor__list__imgBox} />
-                <div className={styles.actor__list__text}>
-                  <p className={styles.actor__list__text__name}>
-                    크리스 콜럼버스
-                  </p>
-                  <p className={styles.actor__list__text__role}>감독</p>
-                </div>
-              </li>
-              <li className={styles.actor__list}>
-                <div className={styles.actor__list__imgBox} />
-                <div className={styles.actor__list__text}>
-                  <p className={styles.actor__list__text__name}>
-                    크리스 콜럼버스
-                  </p>
-                  <p className={styles.actor__list__text__role}>감독</p>
-                </div>
-              </li>
-              <li className={styles.actor__list}>
-                <div className={styles.actor__list__imgBox} />
-                <div className={styles.actor__list__text}>
-                  <p className={styles.actor__list__text__name}>
-                    크리스 콜럼버스
-                  </p>
-                  <p className={styles.actor__list__text__role}>감독</p>
-                </div>
-              </li>
-              <li className={styles.actor__list}>
-                <div className={styles.actor__list__imgBox} />
-                <div className={styles.actor__list__text}>
-                  <p className={styles.actor__list__text__name}>
-                    크리스 콜럼버스
-                  </p>
-                  <p className={styles.actor__list__text__role}>감독</p>
-                </div>
-              </li>
-              <li className={styles.actor__list}>
-                <div className={styles.actor__list__imgBox} />
-                <div className={styles.actor__list__text}>
-                  <p className={styles.actor__list__text__name}>
-                    크리스 콜럼버스
-                  </p>
-                  <p className={styles.actor__list__text__role}>감독</p>
-                </div>
-              </li>
-              <li className={styles.actor__list}>
-                <div className={styles.actor__list__imgBox} />
-                <div className={styles.actor__list__text}>
-                  <p className={styles.actor__list__text__name}>
-                    크리스 콜럼버스
-                  </p>
-                  <p className={styles.actor__list__text__role}>감독</p>
-                </div>
-              </li>
-              <li className={styles.actor__list}>
-                <div className={styles.actor__list__imgBox} />
-                <div className={styles.actor__list__text}>
-                  <p className={styles.actor__list__text__name}>
-                    크리스 콜럼버스
-                  </p>
-                  <p className={styles.actor__list__text__role}>감독</p>
-                </div>
-              </li>
-              <li className={styles.actor__list}>
-                <div className={styles.actor__list__imgBox} />
-                <div className={styles.actor__list__text}>
-                  <p className={styles.actor__list__text__name}>
-                    크리스 콜럼버스
-                  </p>
-                  <p className={styles.actor__list__text__role}>감독</p>
-                </div>
-              </li>
+
+          <div className={styles.actor__content} ref={containerRef}>
+            <ul
+              className={styles.actor__ul}
+              ref={innerRef}
+              onScroll={handleScrollX}
+            >
+              {scrollX >= 1 ? (
+                <button
+                  className={`${styles.ul__prevBtn} ${styles.ul__btn}`}
+                  onClick={handlePrevBtn}
+                >
+                  <FontAwesomeIcon icon={faChevronLeft} />
+                </button>
+              ) : null}
+              {profileList.map(el => {
+                return (
+                  <ProductionList key={el.id} name={el.name} url={el.imgUrl} />
+                );
+              })}
             </ul>
+            {scrollX !== slideWidth || scrollX === 0 ? (
+              <button
+                className={`${styles.ul__nextBtn} ${styles.ul__btn}`}
+                onClick={handleNextBtn}
+              >
+                <FontAwesomeIcon icon={faChevronRight} />
+              </button>
+            ) : null}
           </div>
         </section>
         <section className={styles.info__graph}>
