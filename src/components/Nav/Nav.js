@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Nav.module.scss';
 import Login from '../Login_popup/Login';
-// import SignUp from '../SignUp_popUp/SignUp';
+import SignUp from '../SignUp_popUp/SignUp';
 import disableScroll from 'disable-scroll';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
