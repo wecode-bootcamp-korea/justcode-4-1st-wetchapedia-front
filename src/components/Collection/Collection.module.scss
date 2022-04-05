@@ -1,0 +1,87 @@
+.collection {
+  position: relative;
+}
+
+.collection__container {
+  overflow: hidden;
+  margin: 0 60px;
+}
+
+.collection__inner {
+  display: flex;
+  overflow: scroll;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.collection__card {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 20%;
+  padding: 6px;
+}
+
+.collection__imgBoxContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: #cccdcf;
+  border: 3px solid #cccdcf;
+  border-radius: 10px;
+  &:hover {
+    background-color: #f1f1f1;
+    border-color: #f1f1f1;
+  }
+}
+
+.collection__imgBox {
+  width: 50%;
+  border-radius: 5px;
+}
+
+.collection__images {
+  aspect-ratio: 1/1.45;
+  object-fit: cover;
+  object-position: bottom;
+  width: 98%;
+  height: 98%;
+  border-radius: 5px;
+}
+
+// 세부내용
+.collection__title {
+  margin: 12px 60px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.collection__btn {
+  position: absolute;
+  top: 50%;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  &:hover {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+.collection__prevBtn {
+  left: 50px;
+  box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+.collection__nextBtn {
+  right: 50px;
+  box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+.collection__card__title {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 500;
+}

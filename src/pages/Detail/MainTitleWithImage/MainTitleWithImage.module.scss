@@ -164,7 +164,10 @@
   justify-content: space-evenly;
   width: 50%;
   height: auto;
+<<<<<<< HEAD
   border: 1px solid orange;
+=======
+>>>>>>> develop
 }
 
 .wantToWrapper {
@@ -175,7 +178,10 @@
   width: 20%;
   height: 40%;
   margin-top: 4%;
+<<<<<<< HEAD
   border: 1px solid red;
+=======
+>>>>>>> develop
 }
 
 .wantToWrapper:hover {
@@ -196,7 +202,11 @@
   transition: all 0.2s ease-in-out;
 }
 
+<<<<<<< HEAD
 .notYet:hover {
+=======
+.notYetHover {
+>>>>>>> develop
   display: flex;
   flex-wrap: wrap;
   font-size: 130%;
@@ -207,6 +217,21 @@
 .yesPlease {
   display: flex;
   flex-wrap: wrap;
+<<<<<<< HEAD
+=======
+  font-size: 130%;
+  transition: all 0.2s ease-in-out;
+  color: #ff0458;
+}
+
+.yesPleaseHover {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 130%;
+  transition: all 0.3s ease-in-out;
+  transform: scale(1.3);
+  color: #ff0458;
+>>>>>>> develop
 }
 
 .commentWrapper {
@@ -214,8 +239,13 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+<<<<<<< HEAD
   height: 40%;
   width: 15%;
+=======
+  width: 15%;
+  height: 40%;
+>>>>>>> develop
   margin-top: 4%;
 }
 
@@ -226,4 +256,172 @@
 .comment {
   display: flex;
   flex-wrap: wrap;
+<<<<<<< HEAD
+=======
+  justify-content: center;
+  font-size: 100%;
+}
+
+//코멘트 수정, 삭제 컴포넌트 스타일링
+
+.popUpOpen {
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 12%;
+  height: 10%;
+  bottom: 15%;
+  right: 27%;
+  top: 71%;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0 0 3px #848484;
+}
+
+.popUpOpenInvisible {
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 12%;
+  height: 10%;
+  bottom: 15%;
+  right: 27%;
+  top: 71%;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0 0 3px #848484;
+  visibility: hidden;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+}
+
+.commentEdit {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 3px;
+  width: 98%;
+  height: 100%;
+  margin: 2%;
+  padding-left: 8%;
+}
+
+.commentEdit:hover {
+  background-color: rgb(236, 236, 236);
+  cursor: pointer;
+}
+
+.modalPencil {
+  padding-right: 7%;
+}
+
+.commentDelete {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 3px;
+  width: 98%;
+  height: 100%;
+  margin: 2%;
+  padding-left: 8%;
+}
+
+.commentDelete:hover {
+  background-color: rgb(236, 236, 236);
+  cursor: pointer;
+}
+
+.trash {
+  padding-right: 7%;
+}
+
+//코멘트 삭제 모달창 스타일링
+
+.modalWrapper {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.modalWrapperClosed {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+
+.deleteModal {
+  position: fixed;
+  background-color: white;
+  width: 19%;
+  top: 42%;
+  right: 40%;
+  border-radius: 10px;
+  align-items: center;
+}
+
+.confirmBlock {
+  padding: 7% 0%;
+  margin: 0 7%;
+  border-bottom: 1px solid rgb(191, 191, 191);
+  pointer-events: none;
+}
+
+.alert {
+  font-weight: bold;
+  padding: 2%;
+}
+
+.confirmation {
+  padding: 2%;
+}
+
+.confirmationButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 100%;
+  padding: 4%;
+}
+
+.cancel {
+  font-size: 120%;
+  width: 100%;
+  height: auto;
+  color: #ff0458;
+  border-right: 1px solid rgb(191, 191, 191);
+}
+
+.cancel:hover {
+  cursor: pointer;
+}
+
+.deleteConfirm {
+  font-size: 120%;
+  color: #ff0458;
+  width: 100%;
+  height: auto;
+}
+.deleteConfirm {
+  cursor: pointer;
+>>>>>>> develop
 }
