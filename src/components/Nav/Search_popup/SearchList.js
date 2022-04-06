@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
-import styles from '../../Nav/Nav.module.scss';
+import { useNavigate } from 'react-router-dom';
+import styles from './Search.module.scss';
 
 function SearchList(props) {
-  return <li className={styles.SearchContent}>{props.item}</li>;
+  const navigate = useNavigate();
+
+  const goToSearchPage = () => {
+    navigate(`/Search/${props.item}`);
+  };
+
+  return (
+    <li className={styles.SearchContent} onMouseDown={goToSearchPage}>
+      {props.item}
+    </li>
+  );
 }
 export default SearchList;

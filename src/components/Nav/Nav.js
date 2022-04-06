@@ -13,16 +13,9 @@ function Nav() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
   const [SearchOpen, setSearchOpen] = useState(false);
-  const [searchWord, setsearchWord] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('item');
-      if (saved !== null) {
-        return JSON.parse(saved);
-      } else {
-        return [];
-      }
-    }
-  });
+  const [searchWord, setsearchWord] = useState(
+    JSON.parse(localStorage.getItem('item')) || []
+  );
 
   const openLogin = () => {
     setLoginOpen(true);
@@ -75,7 +68,7 @@ function Nav() {
   };
 
   useEffect(() => {
-    localStorage.setItem('items', JSON.stringify(searchWord));
+    localStorage.setItem('item', JSON.stringify(searchWord));
   }, [searchWord]);
 
   return (
