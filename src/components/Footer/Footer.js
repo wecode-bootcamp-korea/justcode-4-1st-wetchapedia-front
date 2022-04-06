@@ -2,8 +2,11 @@ import styles from './Footer.module.scss';
 import { faBlog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { useState } from 'react';
 
 function Footer() {
+  const [ratingTotal, setRatingTotal] = useState();
+
   const goToBlog = () => {
     window.open('https://youngseokim-kr.github.io/', '_blank');
   };
@@ -13,11 +16,24 @@ function Footer() {
   const goToTwitter = () => {
     window.open('https://youngseokim-kr.github.io/', '_blank');
   };
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/rating`, {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(data => {
+        setRatingTotal(data[0].ratings.total);
+      });
+  }, []);
+
   return (
     <div className={styles.Footer}>
       <p className={styles.footerTopSection}>
         지금까지{' '}
-        <span className={styles.footerTopSectionColor}>★ 100개의 평가가</span>{' '}
+        <span className={styles.footerTopSectionColor}>
+          ★ {ratingTotal}개의 평가가
+        </span>{' '}
         쌓였어요.
       </p>
       <div className={styles.footerSection}>
