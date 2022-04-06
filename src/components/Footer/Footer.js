@@ -2,7 +2,7 @@ import styles from './Footer.module.scss';
 import { faBlog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function Footer() {
   const [ratingTotal, setRatingTotal] = useState();
@@ -18,12 +18,12 @@ function Footer() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8000/rating`, {
+    fetch(`http://localhost:8000/rating/users-ratings`, {
       method: 'GET',
     })
       .then(res => res.json())
       .then(data => {
-        setRatingTotal(data[0].ratings.total);
+        setRatingTotal(data.ratings_all);
       });
   }, []);
 
