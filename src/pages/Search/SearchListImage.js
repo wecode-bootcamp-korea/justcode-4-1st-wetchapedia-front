@@ -1,6 +1,4 @@
 import styles from './Search.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 
 function SimilarMovieImage(props) {
@@ -18,10 +16,10 @@ function SimilarMovieImage(props) {
         className={styles.SearchSectionImg}
       />
       <div className={styles.SearchSectionName}>{props.name}</div>
-      <div className={styles.SearchSectionRating}>
-        <div className={styles.SearchSectionRatingName}>평균</div>
-        <FontAwesomeIcon icon={faStar} className={styles.MovieSectionfaStar} />
-        <div className={styles.MovieSectionRating}>{props.rating}</div>
+      <div className={styles.SearchSectioninfo}>
+        <div className={styles.Searchyear}>{props.year}</div>
+        <div className={styles.dot}> ・ </div>
+        <div className={styles.SearchCountry}>{props.country}</div>
       </div>
       <div className={styles.MovieSectionGenre}>{props.genre}</div>
     </section>

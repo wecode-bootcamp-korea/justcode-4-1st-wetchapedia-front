@@ -16,25 +16,26 @@ function SearchMovie() {
   }, []);
 
   return (
-    <div className={styles.SearchMovie}>
-      <div className={styles.SearchMovieTilte}>" "의 검색결과</div>
+    <div className={styles.Search}>
+      <div className={styles.SearchHeader}>
+        <div className={styles.SearchMovieTilte}>" "의 검색결과</div>
+      </div>
       <div className={styles.SearchMovie}>
-        <section className={styles.SearchList}>
-          <div className={styles.SearchSection}>
-            {movieData.map(comment => {
-              return (
-                <SearchMovieImage
-                  key={comment.id}
-                  id={comment.id}
-                  imgUrl={comment.poster_url}
-                  name={comment.name}
-                  rating={comment.count}
-                  genre={comment.genre_name}
-                />
-              );
-            })}
-          </div>
-        </section>
+        <div className={styles.SearchSection}>
+          {movieData.map(comment => {
+            return (
+              <SearchMovieImage
+                key={comment.id}
+                id={comment.id}
+                imgUrl={comment.poster_url}
+                name={comment.name}
+                year={comment.year}
+                country={comment.country}
+                genre={comment.genre_name}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
