@@ -2,15 +2,8 @@ import styles from './Login.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Login = props => {
-  const navigate = useNavigate();
-
-  const goToList = () => {
-    navigate('/');
-  };
-
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
   const [isActive, setIsActive] = useState(true);
@@ -36,6 +29,7 @@ const Login = props => {
 
   useEffect(() => {
     isPassedLogin();
+    console.log(idBoxColor);
   }, [id, pw]);
 
   const isPassedLogin = () => (
@@ -83,7 +77,7 @@ const Login = props => {
 
   // 서버 연결 로그인
   const handleLogin = () => {
-    fetch(' http://localhost:8000/user/login', {
+    fetch(' http://localhost:8000/user/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -97,15 +91,14 @@ const Login = props => {
       .then(result => {
         // console.log(result);
         //통신오류
-        if (result.message === 'client input invalid') {
-          alert(
-            ' 아이디 또는 비밀번호를 잘못 입력했습니다. \n 입력하신 내용을 다시 확인해주세요.'
-          );
+        if (result.message === 'INVALID_USER') {
+          alert(' 아이디 또는 비밀번호를 잘못 입력했습니다.');
           clearInput();
         }
         // 성공시 url 이동
-        else {
-          goToList();
+        else if (result.message === 'Sign in succesful') {
+          alert('로그인 성공!');
+          close();
         }
       });
   };
@@ -114,7 +107,11 @@ const Login = props => {
       className={
         open ? `${styles.openModal} ${styles.modal}` : `${styles.modal}`
       }
-      onClick={close}
+      onClick={() => {
+        close();
+        setIdBoxColor('#f5f5f5');
+        setPWBoxColor('#f5f5f5');
+      }}
     >
       {open ? (
         <section
@@ -140,6 +137,7 @@ const Login = props => {
               onKeyPress={keyInput}
               onChange={handleIdInput}
               ref={idInputBox}
+              autoComplete="off"
               style={{ backgroundColor: idBoxColor }}
             />
             <input
@@ -157,6 +155,7 @@ const Login = props => {
               style={{ cursor: cursor }}
               disabled={isActive}
               onClick={handleLogin}
+              type="button"
             >
               로그인
             </button>

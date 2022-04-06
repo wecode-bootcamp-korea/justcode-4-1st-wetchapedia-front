@@ -33,7 +33,7 @@
 .component_wrapper {
   display: flex;
   justify-content: flex-end;
-  width: 50%;
+  width: 70%;
 }
 
 .searchBar_wrapper {
@@ -62,15 +62,19 @@
   border: none;
   margin: 0 15px;
   color: rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
   cursor: pointer;
 }
+
 .navBar__signUpBtn {
   padding: 0 15px;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   font-weight: 600;
+  white-space: nowrap;
   cursor: pointer;
 }
+
 //검색박스 - 영서
 .Search {
   position: absolute;

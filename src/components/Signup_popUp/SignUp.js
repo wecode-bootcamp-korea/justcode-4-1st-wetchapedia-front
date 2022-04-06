@@ -10,7 +10,7 @@ const SignUp = props => {
   const [isActive, setIsActive] = useState(true);
   const [cursor, setCursor] = useState('auto');
   const [nameBoxColor, setNameBoxColor] = useState('#f5f5f5');
-  const [idBoxColor, setidBoxColor] = useState('#f5f5f5');
+  const [idBoxColor, setIdBoxColor] = useState('#f5f5f5');
   const [pwBoxColor, setPwBoxColor] = useState('#f5f5f5');
   const { open, close, openLogin } = props;
 
@@ -42,8 +42,8 @@ const SignUp = props => {
       ? setNameBoxColor('#f5f5f5')
       : setNameBoxColor('#FEF0EF'),
     checkEmail(id) || id.length === 0
-      ? setidBoxColor('#f5f5f5')
-      : setidBoxColor('#FEF0EF'),
+      ? setIdBoxColor('#f5f5f5')
+      : setIdBoxColor('#FEF0EF'),
     checkPW(pw) || pw.length === 0
       ? setPwBoxColor('#f5f5f5')
       : setPwBoxColor('#FEF0EF')
@@ -70,18 +70,19 @@ const SignUp = props => {
       return true;
     }
   }
-
+  const nameInputBox = useRef();
   const idInputBox = useRef();
   const pwInputBox = useRef();
 
   //inputbox 초기화하고 마우스커서 idbox로 옮기기
   function clearInput() {
+    nameInputBox.current.value = '';
     idInputBox.current.value = '';
     pwInputBox.current.value = '';
     setIsActive(true);
     // setidBoxColor('#e3e3e3');
     // setpwdBoxColor('#e3e3e3');
-    idInputBox.current.focus();
+    nameInputBox.current.focus();
   }
 
   // 서버 연결 회원가입
@@ -104,7 +105,7 @@ const SignUp = props => {
           clearInput();
         } else {
           alert('축하합니다! 회원가입 성공!');
-          clearInput();
+          close();
         }
       });
   };
@@ -114,7 +115,12 @@ const SignUp = props => {
       className={
         open ? `${styles.openModal} ${styles.modal}` : `${styles.modal}`
       }
-      onClick={close}
+      onClick={() => {
+        close();
+        setNameBoxColor('#f5f5f5');
+        setIdBoxColor('#f5f5f5');
+        setPwBoxColor('#f5f5f5');
+      }}
     >
       {open ? (
         <section
@@ -140,7 +146,8 @@ const SignUp = props => {
               onKeyPress={keyInput}
               onChange={handleNameInput}
               required={true}
-              // ref={idInputBox}
+              ref={nameInputBox}
+              autoComplete="off"
               style={{ backgroundColor: nameBoxColor }}
             />
             <input
@@ -151,6 +158,7 @@ const SignUp = props => {
               onKeyDown={keyInput}
               onChange={handleIdInput}
               ref={idInputBox}
+              autoComplete="off"
               style={{ backgroundColor: idBoxColor }}
             />
             <input
