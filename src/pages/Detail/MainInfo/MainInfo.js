@@ -1,5 +1,6 @@
 import styles from './MainInfo.module.scss';
 import ProductionList from './ProductionList';
+import InfoList from './InfoList';
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,11 +10,22 @@ import {
 
 function MainInfo() {
   const [profileList, setProfileList] = useState([]);
+  const [infoList, setInfoList] = useState({});
   const [scrollX, setScrollX] = useState(0);
   const [slideWidth, setSlideWidth] = useState(0);
 
   const containerRef = useRef();
   const innerRef = useRef();
+
+  useEffect(() => {
+    fetch('/data/movieInfo.json', {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(data => {
+        setInfoList(data[0]);
+      });
+  }, []);
 
   useEffect(() => {
     fetch('/data/production.json', {
@@ -23,7 +35,7 @@ function MainInfo() {
       .then(data => {
         setProfileList(data);
       });
-  });
+  }, []);
 
   function handleScrollX(event) {
     setScrollX(event.target.scrollLeft);
@@ -46,17 +58,30 @@ function MainInfo() {
             <h2 className={styles.header__title}>기본정보</h2>
             {/* <h3>더보기</h3> */}
           </header>
-          <div className={styles.basic__content}>
-            <p>Harry Potter and the Sorcerer's Stone</p>
-            <p>2001 · 영국 · 모험</p>
-            <p>2시간 32분 · 전체</p>
-            <p className={styles.movie__story}>
-              해리 포터는 위압적인 버논 숙부와 냉담한 이모 페투니아, 욕심 많고
-              버릇 없는 사촌 더들리 밑에서 갖은 구박을 견디며 계단 밑 벽장에서
-              생활한다. 이모네 식구들 역시 해리와의 동거가 불편하기는 마찬가지,
-              이모...
-            </p>
-          </div>
+          {/* {infoList.map(el => {
+            return (
+              <InfoList
+                key={el.movie_id}
+                name={el.movie_name}
+                release_date={el.release_date}
+                genre={el.genre_name}
+                country={el.country_name}
+                run_time={el.run_time}
+                age={el.movie_age}
+                story={el.movie_story}
+              />
+            );
+          })} */}
+          <InfoList
+            key={infoList.movie_id}
+            name={infoList.movie_name}
+            date={infoList.release_date}
+            country={infoList.country_name}
+            genre={infoList.genre_name}
+            run_time={infoList.run_time}
+            age={infoList.movie_age}
+            story={infoList.movie_story}
+          />
         </section>
         <section className={styles.info__actor}>
           <header className={`${styles.actor__header} ${styles.header__title}`}>

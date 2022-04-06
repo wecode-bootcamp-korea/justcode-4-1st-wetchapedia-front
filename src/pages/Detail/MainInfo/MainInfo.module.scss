@@ -1,5 +1,6 @@
 .info__wrapper {
   width: 640px;
+  padding-top: 50px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
 }
@@ -15,17 +16,6 @@
   h3 {
     color: rgb(255, 47, 110);
   }
-}
-
-.basic__content {
-  font-size: 15px;
-  p {
-    line-height: 24px;
-  }
-}
-
-.movie__story {
-  margin: 8px 0;
 }
 
 .info__actor {
@@ -94,7 +84,7 @@
 }
 
 .ul__prevBtn {
-  left: 10px;
+  left: 0px;
   box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
