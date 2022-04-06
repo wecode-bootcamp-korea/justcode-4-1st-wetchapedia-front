@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Carousel5.module.scss';
 import MovieCard from './MovieCard/MovieCard';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
+
 const Carousel5 = props => {
   const SliderWrapperRef = React.useRef();
   const [leftButtonOn, setLeftButtonOn] = useState('Hidden');
@@ -38,7 +44,7 @@ const Carousel5 = props => {
   const [movieList, setMovieList] = useState([]);
   useEffect(() => {
     fetch(
-      `http://localhost:7000/Main/Carousel?CategoryId=${props.categoryId}&limit=${props.limit}`,
+      `http://localhost:8000/Movie/category?CategoryId=${props.CategoryId}&limit=${props.limit}`,
       {
         method: 'GET',
       }
@@ -59,25 +65,17 @@ const Carousel5 = props => {
   return (
     <div className={styles.Carousel5Wrapper}>
       <div className={styles.DivForButton}>
-        <button
+        <FontAwesomeIcon
+          icon={faChevronLeft}
           className={`${styles.Button} ${styles[leftButtonOn]}`}
           onClick={MoveLeft}
-        >
-          <img
-            width="-100%"
-            src="/image/arrow.svg"
-            style={{
-              WebkitTransform: 'scaleX(-1)',
-              transform: 'scaleX(-1)',
-            }}
-          />
-        </button>
-        <button
+        />
+
+        <FontAwesomeIcon
+          icon={faChevronRight}
           className={`${styles.Button} ${styles[rightButtonOn]}`}
           onClick={MoveRight}
-        >
-          <img src="/image/arrow.svg" />
-        </button>
+        />
       </div>
       <div className={styles.Title}>{props.categoryName}</div>
       <div
