@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Nav.module.scss';
 import Login from '../Login_popup/Login';
-import SignUp from '../Signup_popup/SignUp';
+import SignUp from '../SignUp_popUp/SignUp';
 import disableScroll from 'disable-scroll';
 import SearchList from './Search_popup/SearchList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -132,8 +132,8 @@ function Nav() {
             </button>
           </div>
         </nav>
-        <Login open={loginOpen} close={closeLogin} />
-        <SignUp open={signUpOpen} close={closeSignUp} />
+        <Login open={loginOpen} close={closeLogin} openSignUp={openSignUp} />
+        <SignUp open={signUpOpen} close={closeSignUp} openLogin={openLogin} />
       </header>
     </div>
   );
