@@ -49,3 +49,25 @@
 .footerFont:hover {
   color: #59ad28;
 }
+
+@media (max-width: 950px) {
+  .footerSection {
+    padding: 38px 100px;
+  }
+}
+
+@media (max-width: 760px) {
+  .footerSection {
+    padding: 38px 50px;
+  }
+}
+
+@media (max-width: 550px) {
+  .footerSection {
+    display: block;
+  }
+  .SectionLeft {
+    display: none;
+    font-size: 8px;
+  }
+}
