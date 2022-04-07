@@ -7,6 +7,8 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 const Comment_popup = () => {
   const [saveBtnActive, setSaveBtnActive] = useState(false);
+  const [textareaValue, setTextAreaValue] = useState('');
+  const [commentValue, setCommentValue] = useState('');
   const [inputValueLength, setInputValueLength] = useState(0);
   const [num, setNum] = useState(0);
   const textArea = useRef();
@@ -16,6 +18,10 @@ const Comment_popup = () => {
   useEffect(() => {
     setNum(inputValueLength);
   }, [inputValueLength]);
+
+  useEffect(() => {
+    setCommentValue(textareaValue);
+  }, [textareaValue]);
 
   const handleInputOnFocus = () => {
     textArea.current.focus();
@@ -33,6 +39,24 @@ const Comment_popup = () => {
     }
   };
 
+  // //comment 가져오기
+  // useEffect(() => {
+  //   fetch('/comment/content', {
+  //     method: 'GET',
+  //   })
+  //     .then(res => res.json())
+  //     .then(result => {
+  //       if (result.status === 201) {
+  //         setTextAreaValue(result);
+  //       } else {
+  //         setTextAreaValue('Hi');
+  //         console.log('ㅠㅠ');
+  //         console.log(textareaValue);
+  //       }
+  //     });
+  // }, []);
+
+  //comment 추가
   const commentAdd = () => {
     fetch('/comment/', {
       method: 'POST',
@@ -55,6 +79,7 @@ const Comment_popup = () => {
       });
   };
 
+  // comment 수정
   const commentModify = () => {
     fetch('/comment/', {
       method: 'PUT',
@@ -105,7 +130,9 @@ const Comment_popup = () => {
                 handleSaveBtn();
               }}
               onChange={handleLength}
-            />
+            >
+              {commentValue}
+            </textarea>
           </main>
           <footer className={styles.footer}>
             <div>
