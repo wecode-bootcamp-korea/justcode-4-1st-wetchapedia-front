@@ -3,8 +3,8 @@ import styles from './Carousel5.module.scss';
 import MovieCard from './MovieCard/MovieCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faChevronLeft,
-  faChevronRight,
+  faCircleChevronRight,
+  faCircleChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
 const Carousel5 = props => {
@@ -44,14 +44,14 @@ const Carousel5 = props => {
   const [movieList, setMovieList] = useState([]);
   useEffect(() => {
     fetch(
-      `http://localhost:8000/Movie/category?CategoryId=${props.CategoryId}&limit=${props.limit}`,
+      `http://localhost:8000/movie?category-id=${props.CategoryId}&limit=${props.limit}`,
       {
         method: 'GET',
       }
     )
       .then(res => res.json())
       .then(data => {
-        let dataForCarousel = data.CarouselData;
+        let dataForCarousel = data.movies;
         let sequenceNumber = 1;
         dataForCarousel.map(data => {
           data.release_year = data.release_date.split('/')[0];
@@ -61,18 +61,17 @@ const Carousel5 = props => {
         setMovieList(dataForCarousel);
       });
   }, []);
-
   return (
     <div className={styles.Carousel5Wrapper}>
       <div className={styles.DivForButton}>
         <FontAwesomeIcon
-          icon={faChevronLeft}
+          icon={faCircleChevronLeft}
           className={`${styles.Button} ${styles[leftButtonOn]}`}
           onClick={MoveLeft}
         />
 
         <FontAwesomeIcon
-          icon={faChevronRight}
+          icon={faCircleChevronRight}
           className={`${styles.Button} ${styles[rightButtonOn]}`}
           onClick={MoveRight}
         />
@@ -86,12 +85,15 @@ const Carousel5 = props => {
         {movieList.map(movie => {
           return (
             <MovieCard
-              title="테스트"
+              key={movie.id}
+              movie_id={movie.id}
+              title={movie.name}
               releasedYear={movie.release_year}
               countryName={movie.country_name}
               averageRatingScore={movie.count}
               sequenceNumber={movie.sequenceNumber}
               imgUrl={'https://' + movie.poster_url}
+              genre_name={movie.genre_name}
             />
           );
         })}

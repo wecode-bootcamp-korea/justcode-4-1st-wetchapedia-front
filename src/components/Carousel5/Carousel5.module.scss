@@ -55,13 +55,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 36x;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
+  border: none;
   pointer-events: all;
-  background-color: white;
-  box-shadow: 4px 0px 4px 0px rgb(0 0 0 / 20%);
-  color: rgba(0, 0, 0, 0.3);
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
 
   @media screen and (max-width: 900px) {

@@ -16,7 +16,18 @@ function Main() {
           limit={10}
           categoryName={'위챠 Top 10 영화'}
         />
-        <Carousel6 />
+        <Carousel6
+          CategoryId={3}
+          limit={12}
+          categoryName={'김영서 평론가님이 최근에 재밌게 본 영화'}
+          urlName={'category-id'}
+        />
+        <Carousel6
+          CategoryId={'want'}
+          limit={12}
+          categoryName={'보고싶어요 순위'}
+          urlName={'ordering'}
+        />
         <Collection />
       </section>
       <Footer />

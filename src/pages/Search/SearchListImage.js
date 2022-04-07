@@ -11,7 +11,7 @@ function SimilarMovieImage(props) {
     <section className={styles.SearchSections} onClick={goToDetailPage}>
       <img
         id={props.id}
-        src={props.imgUrl}
+        src={'https://' + props.imgUrl}
         alt={props.name}
         className={styles.SearchSectionImg}
       />
