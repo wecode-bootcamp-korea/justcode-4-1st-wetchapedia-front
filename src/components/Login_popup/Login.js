@@ -29,7 +29,6 @@ const Login = props => {
 
   useEffect(() => {
     isPassedLogin();
-    console.log(idBoxColor);
   }, [id, pw]);
 
   const isPassedLogin = () => (
@@ -77,7 +76,7 @@ const Login = props => {
 
   // 서버 연결 로그인
   const handleLogin = () => {
-    fetch(' http://localhost:8000/user/signin', {
+    fetch('/user/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -99,9 +98,11 @@ const Login = props => {
         else if (result.message === 'Sign in succesful') {
           alert('로그인 성공!');
           close();
+          window.location.reload();
         }
       });
   };
+
   return (
     <div
       className={
@@ -154,7 +155,7 @@ const Login = props => {
               className={styles.login__form__btn}
               style={{ cursor: cursor }}
               disabled={isActive}
-              onClick={handleLogin}
+              onClick={{ handleLogin }}
               type="button"
             >
               로그인

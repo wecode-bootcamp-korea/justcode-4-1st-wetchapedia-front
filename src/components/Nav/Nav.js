@@ -10,6 +10,8 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 let arrayKey = 0;
 
 function Nav() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [userName, setUserName] = useState('');
   const [loginOpen, setLoginOpen] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
   const [SearchOpen, setSearchOpen] = useState(false);
@@ -71,6 +73,26 @@ function Nav() {
     localStorage.setItem('item', JSON.stringify(searchWord));
   }, [searchWord]);
 
+  // 로그인 검증
+  useEffect(() => {
+    fetch('/user/verification', {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.message === 'NOW_LOGIN') {
+          setIsLogin(true);
+          setUserName(result.user_name);
+          // console.log('로그인중');
+          // console.log(isLogin);
+          // console.log(userName);
+        } else if (result.message === 'NOW_LOGOUT') {
+          setIsLogin(false);
+          setUserName('');
+        }
+      });
+  }, []);
+
   return (
     <div className="Nav">
       <header className={styles.navBar_container}>
@@ -123,13 +145,29 @@ function Nav() {
                 </div>
               )}
             </div>
-            <button className={styles.navBar__signInBtn} onClick={openLogin}>
-              로그인
-            </button>
 
-            <button className={styles.navBar__signUpBtn} onClick={openSignUp}>
-              회원가입
-            </button>
+            {isLogin ? (
+              <div className={styles.user_welcome}>
+                <p className={styles.user_welcome_name}>{userName}</p>
+                <p className={styles.user_welcome_sayHi}>님,</p>
+                <p className={styles.user_welcome_sayHi}>반갑습니다.</p>
+              </div>
+            ) : (
+              <div className={styles.button_wrapper}>
+                <button
+                  className={styles.navBar__signInBtn}
+                  onClick={openLogin}
+                >
+                  로그인
+                </button>
+                <button
+                  className={styles.navBar__signUpBtn}
+                  onClick={openSignUp}
+                >
+                  회원가입
+                </button>
+              </div>
+            )}
           </div>
         </nav>
         <Login open={loginOpen} close={closeLogin} openSignUp={openSignUp} />
