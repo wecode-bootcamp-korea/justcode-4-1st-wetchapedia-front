@@ -11,11 +11,11 @@ const Comment_popup = () => {
   const [num, setNum] = useState(0);
   const textArea = useRef();
   const saveBtn = useRef();
+  // const { open, close } = props;
 
   useEffect(() => {
     setNum(inputValueLength);
   }, [inputValueLength]);
-  // const { open, close } = props;
 
   const handleInputOnFocus = () => {
     textArea.current.focus();
@@ -31,6 +31,47 @@ const Comment_popup = () => {
     if (num > 200) {
       e.target.value = e.target.value.substring(0, 200);
     }
+  };
+
+  const commentAdd = () => {
+    fetch('/comment/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        comment: '',
+        movieId: '',
+      }),
+    })
+      .then(res => res.json())
+      .then(result => {
+        // console.log(result);
+        // comment 등록 성공
+        if (result.message === 'COMMENT_INSERT') {
+          alert('등록 성공!');
+          // close Comment popup
+        }
+      });
+  };
+
+  const commentModify = () => {
+    fetch('/comment/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        comment: '',
+        movieId: '',
+      }),
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.message === 'COMMENT_MODIFY') {
+          alert('수정 완료!');
+        }
+      });
   };
 
   return (
@@ -84,6 +125,12 @@ const Comment_popup = () => {
                 className={styles.footer__right__saveBtn}
                 ref={saveBtn}
                 disabled={!saveBtnActive ? true : false}
+                onClick={() => {
+                  // 저장되어 있을 시에? Comment Modify : Comment Add
+                  commentAdd();
+                  commentModify();
+                }}
+                // 저장되어 있을 시에? 수정 : 저장
               >
                 저장
               </button>
