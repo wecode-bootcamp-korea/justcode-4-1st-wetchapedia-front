@@ -1,0 +1,74 @@
+.commentWrapper {
+  // 삭제 꼭~!!!~!!!~!~!!!!!
+  margin-top: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 640px;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+// .commentWrapper {
+//   width: 100%;
+//   display: flex;
+// }
+
+.comment__profile {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.comment__profile__img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+// .comment__contentWrapper {
+//   // width: 80%;
+//   // overflow: hidden;
+// }
+
+.comment__content {
+  width: 100%;
+  max-height: 60px;
+  text-align: left;
+  word-wrap: break-word;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.comment__btnWrapper {
+  display: flex;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.btn {
+  border: none;
+  color: rgba(0, 0, 0, 0.5);
+  padding: 0;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.deleteBtn {
+  &::after {
+    content: '';
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 1px;
+    height: 8px;
+    margin: 0px 17px;
+  }
+}
+
+.icon {
+  margin-right: 5px;
+}
