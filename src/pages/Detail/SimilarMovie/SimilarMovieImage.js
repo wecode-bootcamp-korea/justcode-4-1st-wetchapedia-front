@@ -7,7 +7,9 @@ function SimilarMovieImage(props) {
   const navigate = useNavigate();
 
   const goToDetailPage = () => {
-    navigate(`/Detail/${props.id}`);
+    navigate(`/detail/${props.id}`);
+    window.scrollTo(0, 0);
+    window.location.reload();
   };
   return (
     <section className={styles.MovieSections} onClick={goToDetailPage}>
@@ -19,9 +21,9 @@ function SimilarMovieImage(props) {
       />
       <div className={styles.MovieSectionName}>{props.name}</div>
       <div className={styles.MovieSectionRating}>
-        <div className={styles.MovieSectionRatingName}>평균</div>
-        <FontAwesomeIcon icon={faStar} className={styles.MovieSectionfaStar} />
-        <div className={styles.MovieSectionRating}>{props.rating}</div>
+        <div className={styles.MovieSectionRating}>
+          {props.country + ' · ' + props.release_date}
+        </div>
       </div>
       <div className={styles.MovieSectionGenre}>{props.genre}</div>
     </section>

@@ -1,7 +1,13 @@
+.space {
+  width: 20px;
+
+  display: inline-block;
+  box-sizing: border-box;
+}
 .Carousel5Wrapper {
   box-sizing: border-box;
   position: relative;
-  margin-top: 60px;
+  margin-top: 0px;
   @media screen and (max-width: 900px) {
     padding-left: 0px;
     padding-right: 0px;
@@ -50,18 +56,22 @@
 }
 
 .Button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  margin-top: 65px;
+  background-color: white;
+  border: none;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  &:hover {
+    color: rgba(0, 0, 0, 0.6);
+  }
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 18px;
-  border: 0px;
   pointer-events: all;
-  background-color: white;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-
   @media screen and (max-width: 900px) {
     visibility: hidden;
   }
@@ -69,4 +79,14 @@
 
 .Hidden {
   visibility: hidden;
+}
+
+.ul__prevBtn {
+  left: 0px;
+  box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.ul__nextBtn {
+  right: 10px;
+  box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.2);
 }
