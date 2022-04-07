@@ -12,7 +12,7 @@ import CommentDelete from './CommentDeleteModal';
 import CommentEditComponent from './CommentEditComponent';
 // import RatingsCard from './RatingsCard';
 
-function MainTitleWithImage() {
+function MainTitleWithImage(props) {
   // const [starImg, SetStarImg] = useState({
   //   stars: [],
   // });
@@ -86,7 +86,9 @@ function MainTitleWithImage() {
       <div className={styles.imageWrapper}>
         <img
           className={styles.movieSceneImage}
-          src="https://raw.githubusercontent.com/nsoarim/wetchaimage/main/image/1/1.jpg"
+          src={
+            'https://raw.githubusercontent.com/nsoarim/wetchaimage/main/image/1/1.jpg'
+          }
         />
       </div>
       <section className={styles.infoBlock}>

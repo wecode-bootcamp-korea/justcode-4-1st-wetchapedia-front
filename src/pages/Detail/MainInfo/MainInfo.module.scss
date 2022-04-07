@@ -1,12 +1,5 @@
-.info__wrapper {
-  width: 640px;
-  padding-top: 50px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-}
-
 .info__basic {
-  margin: 20px;
+  margin: 0 20px 20px 20px;
 }
 
 .basic__header {
@@ -27,6 +20,7 @@
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 .actor__content {
+  scroll-behavior: smooth;
   position: relative;
   overflow: hidden;
   ::-webkit-scrollbar {
@@ -44,6 +38,8 @@
 
 .info__graph {
   margin: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .graph__header {

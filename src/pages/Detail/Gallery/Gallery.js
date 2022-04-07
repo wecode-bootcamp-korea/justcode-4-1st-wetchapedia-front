@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import disableScroll from 'disable-scroll';
 
-function Gallery() {
+function Gallery(props) {
   const [images, setImages] = useState([]);
   const [scrollX, setScrollX] = useState(0);
   const [scrollEnd, setScrollEnd] = useState(0);
@@ -63,27 +63,27 @@ function Gallery() {
       : setRightShow(false);
   }, [imgIndex]);
   useEffect(() => {
-    fetch('/data/Images.json', {
+    fetch(`/movie/images/${props.movieId}`, {
       method: 'GET',
     })
       .then(res => res.json())
       .then(data => {
-        setImages(data);
+        setImages(data.movieImages);
       });
-  }, []);
+  }, [props.movieId]);
 
   return (
     <div className={styles.GalleryTotal}>
       <div className={styles.Gallery}>
         <div className={styles.GalleryTitle}>갤러리</div>
         <div className={styles.ImageSection} onScroll={setCursor} ref={Section}>
-          {images.map(comment => {
+          {images.map(image => {
             return (
               <GalleryImages
-                key={comment.id}
-                index={comment.id}
-                img={comment.poster_url}
-                name={comment.name}
+                key={image.id}
+                index={image.id}
+                img={'http://' + image.images_url}
+                name={image.name}
                 modal={modal}
               />
             );

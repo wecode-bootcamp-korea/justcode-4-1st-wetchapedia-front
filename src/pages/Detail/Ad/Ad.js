@@ -7,7 +7,11 @@ function Ad() {
 
   return (
     <div className={styles.DetailAd} onClick={goToAd}>
-      <img src="images/fullstack4_5.png" alt="Ad" className={styles.AdImage} />
+      <img
+        src="/./images/fullstack4_5.png"
+        alt="Ad"
+        className={styles.AdImage}
+      />
       <div className={styles.AdExplanation}>
         <ul>
           <li className={styles.AdTitle}>JustCode X 위챠 스토리공모</li>

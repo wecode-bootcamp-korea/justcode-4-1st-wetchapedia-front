@@ -4,7 +4,6 @@
 
 .collection__container {
   overflow: hidden;
-  margin: 0 60px;
 }
 
 .collection__inner {
@@ -15,12 +14,14 @@
     display: none;
   }
 }
+.Collection__double {
+  display: flex;
+}
 
 .collection__card {
   display: flex;
-  flex-direction: column;
   flex-shrink: 0;
-  width: 20%;
+  width: 100%;
   padding: 6px;
 }
 
@@ -40,6 +41,7 @@
 .collection__imgBox {
   width: 50%;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .collection__images {
@@ -53,35 +55,13 @@
 
 // 세부내용
 .collection__title {
-  margin: 12px 60px;
   font-size: 22px;
   font-weight: 700;
+  margin: 100px 0 20px 15px;
 }
 
-.collection__btn {
-  position: absolute;
-  top: 50%;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background-color: white;
-  border: none;
-  color: rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  &:hover {
-    color: rgba(0, 0, 0, 0.6);
-  }
-}
-.collection__prevBtn {
-  left: 50px;
-  box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.2);
-}
-.collection__nextBtn {
-  right: 50px;
-  box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.2);
-}
 .collection__card__title {
-  margin-top: 10px;
-  font-size: 15px;
+  margin: 10px;
+  font-size: 16px;
   font-weight: 500;
 }

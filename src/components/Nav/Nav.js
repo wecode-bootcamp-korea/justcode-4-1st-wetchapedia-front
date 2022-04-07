@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Nav.module.scss';
 import Login from '../Login_popup/Login';
+
 import SignUp from '../SignUp_popUp/SignUp';
+
 import disableScroll from 'disable-scroll';
 import SearchList from './Search_popup/SearchList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 let arrayKey = 0;
 
 function Nav() {
@@ -18,6 +22,7 @@ function Nav() {
   const [searchWord, setsearchWord] = useState(
     JSON.parse(localStorage.getItem('item')) || []
   );
+  const navigate = useNavigate();
 
   const openLogin = () => {
     setLoginOpen(true);
@@ -62,7 +67,17 @@ function Nav() {
       item: item,
     };
     arrayKey += 1;
-    setsearchWord(searchWord.concat([items]));
+    let newSearchword = searchWord;
+    newSearchword.unshift(items);
+    setsearchWord(newSearchword);
+    window.localStorage.setItem('item', JSON.stringify(searchWord));
+    goToSearchPage(items.item);
+  };
+
+  const goToSearchPage = item => {
+    console.log('gotoSearchpage', item);
+    navigate(`/search?${item}`);
+    window.location.reload();
   };
 
   const SearchDelete = e => {
@@ -70,7 +85,8 @@ function Nav() {
   };
 
   useEffect(() => {
-    localStorage.setItem('item', JSON.stringify(searchWord));
+    console.log('useEffect', searchWord);
+    window.localStorage.setItem('item', JSON.stringify(searchWord));
   }, [searchWord]);
 
   // 로그인 검증
@@ -102,7 +118,7 @@ function Nav() {
             <button className={styles.logoWrapper}>
               <img
                 alt="로고"
-                src="./images/wetcha.png"
+                src="/./images/wetcha.png"
                 className={styles.logo}
               />
             </button>
@@ -137,10 +153,8 @@ function Nav() {
                         검색어를 입력해 주세요.
                       </li>
                     )}
-                    {searchWord.map(comment => {
-                      return (
-                        <SearchList key={comment.id} item={comment.item} />
-                      );
+                    {searchWord.map((comment, k) => {
+                      return <SearchList key={k} item={comment.item} />;
                     })}
                   </ul>
                 </div>

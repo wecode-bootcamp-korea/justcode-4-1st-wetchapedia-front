@@ -3,29 +3,20 @@ import ProductionList from './ProductionList';
 import InfoList from './InfoList';
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 
-function MainInfo() {
+function MainInfo(props) {
   const [profileList, setProfileList] = useState([]);
-  const [infoList, setInfoList] = useState({});
+
   const [scrollX, setScrollX] = useState(0);
   const [slideWidth, setSlideWidth] = useState(0);
 
   const containerRef = useRef();
   const innerRef = useRef();
-
-  useEffect(() => {
-    fetch('/data/movieInfo.json', {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        setInfoList(data[0]);
-      });
-  }, []);
 
   useEffect(() => {
     fetch('/data/production.json', {
@@ -50,15 +41,20 @@ function MainInfo() {
     innerRef.current.scrollBy(containerRef.current.offsetWidth, 0);
   }
 
+  let ratingsString = '';
+  if (props.movieRating.ratings_total == 0) {
+    ratingsString = '아직 평가가 없습니다.';
+  } else {
+    ratingsString = '평균 ★ ' + props.movieRating.ratings_avg;
+  }
   return (
-    <div className="MainInfo">
-      <div className={styles.info__wrapper}>
-        <section className={styles.info__basic}>
-          <header className={styles.basic__header}>
-            <h2 className={styles.header__title}>기본정보</h2>
-            {/* <h3>더보기</h3> */}
-          </header>
-          {/* {infoList.map(el => {
+    <>
+      <section className={styles.info__basic}>
+        <header className={styles.basic__header}>
+          <h2 className={styles.header__title}>기본정보</h2>
+          {/* <h3>더보기</h3> */}
+        </header>
+        {/* {infoList.map(el => {
             return (
               <InfoList
                 key={el.movie_id}
@@ -72,63 +68,62 @@ function MainInfo() {
               />
             );
           })} */}
-          <InfoList
-            key={infoList.movie_id}
-            name={infoList.movie_name}
-            date={infoList.release_date}
-            country={infoList.country_name}
-            genre={infoList.genre_name}
-            run_time={infoList.run_time}
-            age={infoList.movie_age}
-            story={infoList.movie_story}
-          />
-        </section>
-        <section className={styles.info__actor}>
-          <header className={`${styles.actor__header} ${styles.header__title}`}>
-            출연/제작
-          </header>
+        <InfoList
+          key={props.movieInfo.movie_id}
+          name={props.movieInfo.movie_name}
+          date={props.movieInfo.release_date}
+          country={props.movieInfo.country_name}
+          genre={props.movieInfo.genre_name}
+          run_time={props.movieInfo.run_time}
+          age={props.movieInfo.movie_age}
+          story={props.movieInfo.movie_story}
+        />
+      </section>
+      <section className={styles.info__actor}>
+        <header className={`${styles.actor__header} ${styles.header__title}`}>
+          출연/제작
+        </header>
 
-          <div className={styles.actor__content} ref={containerRef}>
-            <ul
-              className={styles.actor__ul}
-              ref={innerRef}
-              onScroll={handleScrollX}
-            >
-              {scrollX >= 1 ? (
-                <button
-                  className={`${styles.ul__prevBtn} ${styles.ul__btn}`}
-                  onClick={handlePrevBtn}
-                >
-                  <FontAwesomeIcon icon={faChevronLeft} />
-                </button>
-              ) : null}
-              {profileList.map(el => {
-                return (
-                  <ProductionList key={el.id} name={el.name} url={el.imgUrl} />
-                );
-              })}
-            </ul>
-            {scrollX !== slideWidth || scrollX === 0 ? (
+        <div className={styles.actor__content} ref={containerRef}>
+          <ul
+            className={styles.actor__ul}
+            ref={innerRef}
+            onScroll={handleScrollX}
+          >
+            {scrollX >= 1 ? (
               <button
-                className={`${styles.ul__nextBtn} ${styles.ul__btn}`}
-                onClick={handleNextBtn}
+                className={`${styles.ul__prevBtn} ${styles.ul__btn}`}
+                onClick={handlePrevBtn}
               >
-                <FontAwesomeIcon icon={faChevronRight} />
+                <FontAwesomeIcon icon={faChevronLeft} />
               </button>
             ) : null}
+            {profileList.map(el => {
+              return (
+                <ProductionList key={el.id} name={el.name} url={el.imgUrl} />
+              );
+            })}
+          </ul>
+          {scrollX !== slideWidth || scrollX === 0 ? (
+            <button
+              className={`${styles.ul__nextBtn} ${styles.ul__btn}`}
+              onClick={handleNextBtn}
+            >
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
+          ) : null}
+        </div>
+      </section>
+      <section className={styles.info__graph}>
+        <header className={styles.graph__header}>
+          <h2 className={styles.header__title}>별점</h2>
+          <div className={styles.header__average}>
+            <span>{ratingsString}</span>
+            <span>({props.movieRating.ratings_total}명)</span>
           </div>
-        </section>
-        <section className={styles.info__graph}>
-          <header className={styles.graph__header}>
-            <h2 className={styles.header__title}>별점 그래프</h2>
-            <div className={styles.header__average}>
-              <span>평균 ★4.3</span>
-              <span>(103만명)</span>
-            </div>
-          </header>
-        </section>
-      </div>
-    </div>
+        </header>
+      </section>
+    </>
   );
 }
 

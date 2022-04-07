@@ -6,7 +6,9 @@ function SearchList(props) {
   const navigate = useNavigate();
 
   const goToSearchPage = () => {
-    navigate(`/Search/${props.item}`);
+    navigate(`/search?${props.item}`);
+    window.scrollTo(0, 0);
+    window.location.reload();
   };
 
   return (

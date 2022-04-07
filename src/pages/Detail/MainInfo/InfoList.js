@@ -17,6 +17,13 @@ import styles from './InfoList.module.scss';
 // }
 
 const InfoList = ({ name, date, country, genre, run_time, age, story }) => {
+  if (age == 0) {
+    age = '전체이용가';
+  } else if (age == 19) {
+    age = '청불';
+  } else {
+    age += '세';
+  }
   return (
     <div className={styles.basic__content}>
       <p>{name}</p>

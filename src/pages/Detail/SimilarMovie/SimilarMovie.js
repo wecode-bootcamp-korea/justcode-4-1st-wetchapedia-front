@@ -2,35 +2,36 @@ import { useState, useEffect } from 'react';
 import styles from './SimilarMovie.module.scss';
 import SimilarMovieImage from './SimilarMovieImage';
 
-function SimilarMovie() {
+function SimilarMovie(props) {
   const [movieData, setMovieData] = useState([]);
   useEffect(() => {
-    fetch('/data/SimilarMovie.json', {
+    fetch(`/movie?genre-name=${props.genre_name}`, {
       method: 'GET',
     })
       .then(res => res.json())
       .then(data => {
-        setMovieData(data);
+        setMovieData(data.Movie);
       });
-  }, []);
+  }, [props.genre_name]);
   return (
-    <section className={styles.SimilarMovie}>
+    <>
       <div className={styles.SimilarMovieTilte}>비슷한 작품</div>
       <div className={styles.movieSection}>
-        {movieData.map(comment => {
+        {movieData.map(movieData => {
           return (
             <SimilarMovieImage
-              key={comment.id}
-              id={comment.id}
-              imgUrl={comment.poster_url}
-              name={comment.name}
-              rating={comment.count}
-              genre={comment.genre_name}
+              key={movieData.id}
+              id={movieData.id}
+              imgUrl={'http://' + movieData.poster_url}
+              name={movieData.name}
+              release_date={movieData.release_date}
+              country={movieData.country}
+              genre={movieData.genre}
             />
           );
         })}
       </div>
-    </section>
+    </>
   );
 }
 export default SimilarMovie;

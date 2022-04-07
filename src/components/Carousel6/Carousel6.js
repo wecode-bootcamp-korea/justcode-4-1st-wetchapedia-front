@@ -7,11 +7,7 @@ import {
   faCircleChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
 
-function Carousel6() {
-  const [moviePosters, setMoviePosters] = useState({
-    movies: [],
-  });
-
+function Carousel6(props) {
   const [scrollXTop, setScrollXTop] = useState(0);
   const [scrollXBottom, setScrollXTBottom] = useState(0);
   const sectionTop = useRef(null);
@@ -19,13 +15,6 @@ function Carousel6() {
 
   const cursorTop = event => {
     setScrollXTop(event.target.scrollLeft);
-    console.log('scrollXtop ', scrollXTop);
-    console.log('scrollWidth ', event.target.scrollWidth);
-    console.log('clientWidth ', event.target.clientWidth);
-    console.log(
-      'scrollWidth - clientWidth ',
-      event.target.scrollWidth - event.target.clientWidth
-    );
   };
 
   const cursorBottom = event => {
@@ -43,11 +32,25 @@ function Carousel6() {
     sectionBottom.current.scrollLeft += scrollOffset;
   };
 
+  const [movieList, setMovieList] = useState([]);
+
   useEffect(() => {
-    fetch('/data/moviesChae.json')
+    fetch(
+      `http://localhost:8000/movie?${props.urlName}=${props.CategoryId}&limit=${props.limit}`,
+      {
+        method: 'GET',
+      }
+    )
       .then(res => res.json())
       .then(data => {
-        setMoviePosters(data);
+        let dataForCarousel = data.movies;
+        let sequenceNumber = 1;
+        dataForCarousel.map(data => {
+          data.release_year = data.release_date.split('/')[0];
+          data.sequenceNumber = sequenceNumber;
+          sequenceNumber += 1;
+        });
+        setMovieList(dataForCarousel);
       });
   }, []);
 
@@ -55,14 +58,24 @@ function Carousel6() {
     <div className={styles.wholeWrapper}>
       <div className={styles.wrapper}>
         <div className={styles.carouselComp}>
-          <title className={styles.CategoryTitle}>평균별점이 높은 작품</title>
+          <title className={styles.CategoryTitle}>{props.categoryName}</title>
           <section
             className={styles.topSlider}
             onScroll={cursorTop}
             ref={sectionTop}
           >
-            {moviePosters.movies.map(movies => (
-              <Carousel6Card key={movies.id} movies={movies} />
+            {movieList.map(movie => (
+              <Carousel6Card
+                key={movie.id}
+                movie_id={movie.id}
+                title={movie.name}
+                releasedYear={movie.release_year}
+                countryName={movie.country_name}
+                averageRatingScore={movie.count}
+                sequenceNumber={movie.sequenceNumber}
+                imgUrl={'https://' + movie.poster_url}
+                genre_name={movie.genre_name}
+              />
             ))}
             {scrollXTop === 0 ? null : (
               <FontAwesomeIcon
@@ -84,38 +97,6 @@ function Carousel6() {
             )}
           </section>
         </div>
-      </div>
-      <div className={styles.wrapper}>
-        <div className={styles.carouselComp}>
-          <title className={styles.CategoryTitle}>평균별점이 높은 작품</title>
-          <section
-            className={styles.bottomSlider}
-            onScroll={cursorBottom}
-            ref={sectionBottom}
-          >
-            {moviePosters.movies.map(movies => (
-              <Carousel6Card key={movies.id} movies={movies} />
-            ))}
-          </section>
-        </div>
-        {scrollXBottom === 0 ? null : (
-          <FontAwesomeIcon
-            icon={faCircleChevronLeft}
-            className={styles.bottomLeft}
-            onClick={() => {
-              moveLeftBottom(-1434);
-            }}
-          />
-        )}
-        {scrollXBottom > 1400 ? null : (
-          <FontAwesomeIcon
-            icon={faCircleChevronRight}
-            className={styles.bottomRight}
-            onClick={() => {
-              moveLeftBottom(1434);
-            }}
-          />
-        )}
       </div>
     </div>
   );
