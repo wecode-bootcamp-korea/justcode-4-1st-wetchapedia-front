@@ -9,7 +9,7 @@ import disableScroll from 'disable-scroll';
 function CommentEditComponent(props) {
   const { open, close } = props;
   const [deleteModal, setDeleteModal] = useState(false);
-  const [popupOpen, setPopupOpen] = useState(false); //코멘트 작성/수정 모달창 관리용
+  const [popupOpen, setPopupOpen] = useState(false); //코멘트 작성, 수정 모달창 관리용
   //코멘트 삭제 모달창 함수
   const openModal = () => {
     setDeleteModal(true);

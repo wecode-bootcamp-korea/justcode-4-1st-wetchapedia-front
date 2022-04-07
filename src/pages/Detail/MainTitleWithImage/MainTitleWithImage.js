@@ -19,8 +19,7 @@ function MainTitleWithImage(movieInfo) {
   // const [starImg, SetStarImg] = useState({
   //   stars: [],
   // });
-  const [loginOpen, setLoginOpen] = useState(false); //로그인 모달 오픈 useState
-
+  const [loginOpen, setLoginOpen] = useState(false); //로그인 모달 관리용
   const [hover, setHover] = useState(0);
   // const [loginModal, setLoginModal] = useState(false);
   const [rating, setRating] = useState(userRatingInfo[{ rating_val: 'N' }]); //유저가 평가하는 별점 State

@@ -6,8 +6,6 @@ import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 function CommentDeleteModal(props) {
   const { showDelete, closeDelete } = props;
 
-  const deleteComment = () => {};
-
   return (
     <div
       className={showDelete ? styles.modalWrapper : styles.modalWrapperClosed}
