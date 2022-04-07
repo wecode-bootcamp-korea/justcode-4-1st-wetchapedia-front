@@ -5,25 +5,30 @@ import { faCommentSlash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 // import { text } from '@fortawesome/fontawesome-svg-core';
 
-const Comment_popup = () => {
+const Comment_popup = props => {
   const [saveBtnActive, setSaveBtnActive] = useState(false);
+  const [isCommented, setIsCommented] = useState(false);
+  const [prevText, setPrevText] = useState('');
   const [textareaValue, setTextAreaValue] = useState('');
-  const [commentValue, setCommentValue] = useState('');
-  const [inputValueLength, setInputValueLength] = useState(0);
+  const [textValueLength, setTextValueLength] = useState(0);
   const [num, setNum] = useState(0);
   const textArea = useRef();
   const saveBtn = useRef();
   // const { open, close } = props;
 
+  // 글자수 세기
   useEffect(() => {
-    setNum(inputValueLength);
-  }, [inputValueLength]);
+    setNum(textValueLength);
+  }, [textValueLength]);
 
-  useEffect(() => {
-    setCommentValue(textareaValue);
-  }, [textareaValue]);
+  const handleLength = e => {
+    if (num > 200) {
+      e.target.value = e.target.value.substring(0, 200);
+    }
+  };
 
-  const handleInputOnFocus = () => {
+  // textArea 바깥 눌러도 textArea 선택되도록
+  const handletextAreaOnFocus = () => {
     textArea.current.focus();
   };
 
@@ -33,30 +38,29 @@ const Comment_popup = () => {
       : setSaveBtnActive(false);
   };
 
-  const handleLength = e => {
-    if (num > 200) {
-      e.target.value = e.target.value.substring(0, 200);
-    }
-  };
+  useEffect(() => {
+    // setTextAreaValue(textareaValue);
+    console.log(textareaValue);
+  }, [textareaValue]);
 
-  // //comment 가져오기
+  //comment 가져오기
+  useEffect(() => {
+    fetch(`/comment/content?movieId=${props.movieId}`, {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(result => {
+        console.log('result:', result);
+        setIsCommented(result.CommentResult);
+      });
+  }, []);
+
   // useEffect(() => {
-  //   fetch('/comment/content', {
-  //     method: 'GET',
-  //   })
-  //     .then(res => res.json())
-  //     .then(result => {
-  //       if (result.status === 201) {
-  //         setTextAreaValue(result);
-  //       } else {
-  //         setTextAreaValue('Hi');
-  //         console.log('ㅠㅠ');
-  //         console.log(textareaValue);
-  //       }
-  //     });
-  // }, []);
+  //   setPrevText(isCommented[0].comment);
+  //   console.log(prevText);
+  // }, [isCommented]);
 
-  //comment 추가
+  //comment 추가 (검증 완)
   const commentAdd = () => {
     fetch('/comment/', {
       method: 'POST',
@@ -64,22 +68,21 @@ const Comment_popup = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        comment: '',
-        movieId: '',
+        comment: textareaValue,
+        movieId: props.movieId,
       }),
     })
       .then(res => res.json())
       .then(result => {
-        // console.log(result);
         // comment 등록 성공
-        if (result.message === 'COMMENT_INSERT') {
+        if (result.SUCCESS === 'COMMENT_INSERT') {
           alert('등록 성공!');
           // close Comment popup
         }
       });
   };
 
-  // comment 수정
+  // comment 수정 (검증 완)
   const commentModify = () => {
     fetch('/comment/', {
       method: 'PUT',
@@ -87,13 +90,13 @@ const Comment_popup = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        comment: '',
-        movieId: '',
+        comment: textareaValue,
+        movieId: props.movieID,
       }),
     })
       .then(res => res.json())
       .then(result => {
-        if (result.message === 'COMMENT_MODIFY') {
+        if (result.SUCCESS === 'COMMENT_MODIFY') {
           alert('수정 완료!');
         }
       });
@@ -105,33 +108,38 @@ const Comment_popup = () => {
         className={
           // open ? `${styles.modal} ${styles.openModal}` : `${styles.modal}`
           `${styles.modal} ${styles.openModal}`
+          // `${styles.modal}`
         }
         // onclick={close}
       >
         <section className={styles.comment}>
           <header className={styles.header}>
-            <span className={styles.header__movieTitle}>
-              해리포터와 마법사의 돌
-            </span>
-            <div className={styles.header__closeBtn}>
+            <span className={styles.header__movieTitle}>{props.movieName}</span>
+            <div
+              className={styles.header__closeBtn}
+              // onClick={close}
+            >
               <FontAwesomeIcon
                 icon={faXmark}
                 className={styles.header__closeBtn__icon}
               />
             </div>
           </header>
-          <main className={styles.main} onClick={handleInputOnFocus}>
+          <main className={styles.main} onClick={handletextAreaOnFocus}>
             <textarea
               className={styles.textarea}
               placeholder="이 작품에 대한 생각을 자유롭게 표현해주세요."
               ref={textArea}
               onKeyUp={e => {
-                setInputValueLength(e.target.value.length);
+                setTextValueLength(e.target.value.length);
+                setTextAreaValue(e.target.value);
                 handleSaveBtn();
               }}
               onChange={handleLength}
             >
-              {commentValue}
+              {/* {useEffect(() => {
+                return prevText.length > 0 ? prevText : 'bye';
+              }, [prevText])} */}
             </textarea>
           </main>
           <footer className={styles.footer}>
@@ -154,7 +162,7 @@ const Comment_popup = () => {
                 disabled={!saveBtnActive ? true : false}
                 onClick={() => {
                   // 저장되어 있을 시에? Comment Modify : Comment Add
-                  commentAdd();
+                  // commentAdd();
                   commentModify();
                 }}
                 // 저장되어 있을 시에? 수정 : 저장
