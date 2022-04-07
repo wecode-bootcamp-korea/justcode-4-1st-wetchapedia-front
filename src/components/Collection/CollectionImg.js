@@ -5,6 +5,7 @@ function CollectionImg(props) {
   const navigate = useNavigate();
   const onClickWrapper = () => {
     navigate(`/detail/${props.movie_id}`);
+    window.scrollTo(0, 0);
   };
   return (
     <div className={styles.collection__imgBox} onClick={onClickWrapper}>

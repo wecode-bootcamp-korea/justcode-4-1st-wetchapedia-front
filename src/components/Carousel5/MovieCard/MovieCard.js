@@ -5,6 +5,7 @@ const MovieCard = props => {
   const navigate = useNavigate();
   const onClickWrapper = () => {
     navigate(`/detail/${props.movie_id}`);
+    window.scrollTo(0, 0);
   };
   return (
     <div className={styles.MovieCardWrapper} onClick={onClickWrapper}>
