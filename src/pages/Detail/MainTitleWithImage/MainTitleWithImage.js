@@ -10,75 +10,237 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import CommentDelete from './CommentDeleteModal';
 import CommentEditComponent from './CommentEditComponent';
+import Login from '../../../components/Login_popup/Login';
+import disableScroll from 'disable-scroll';
+import Comment_popup from '../Comment_popup/Comment_popup';
 // import RatingsCard from './RatingsCard';
 
-function MainTitleWithImage() {
+function MainTitleWithImage(movieInfo) {
   // const [starImg, SetStarImg] = useState({
   //   stars: [],
   // });
+  const [loginOpen, setLoginOpen] = useState(false); //로그인 모달 오픈 useState
+
   const [hover, setHover] = useState(0);
-  const [rating, setRating] = useState(0);
-  const [want, setWant] = useState(false);
-  const [howWasIt, setHowWasIt] = useState('평가하기');
-  const [wantHover, setWantHover] = useState(false);
-  const [commentHover, setCommentHover] = useState(false);
-  const [commentEdit, setCommentEdit] = useState(false);
+  // const [loginModal, setLoginModal] = useState(false);
+  const [rating, setRating] = useState(userRatingInfo[{ rating_val: 'N' }]); //유저가 평가하는 별점 State
+  const [want, setWant] = useState(wantInfo[{ want_val: 0 }]); //보고싶어요 state
+  const [howWasIt, setHowWasIt] = useState('평가하기'); // 별점에 따른 메세지
+  const [wantHover, setWantHover] = useState(false); //보고싶어요 아이콘 호버 시 효과 주기 용
+  const [commentHover, setCommentHover] = useState(false); //코멘트 아이콘 호버 시 효과 주기 용
+  const [commentEdit, setCommentEdit] = useState(false); //로그인 상태시 코멘트 클릭시 코멘트 수정 관련 팝업 관리
+  const [isLogin, setIsLogin] = useState(false); //로그인 검증에 쓰이는 State
+  const [popupOpen, setPopupOpen] = useState(false); //코멘트 등록 모달 여는 state
+  Const[(loginOpen, setLoginOpen)] = useState(false); //로그인 모달을 여는 코드
+  // const [movieInfo, setMovieInfo] = useState({
+  //   movie_id: 0,
+  //   movie_name: '',
+  //   release_date: '',
+  //   genre_name: '',
+  //   country_name: '',
+  //   poster_url: '',
+  // });
+  const [movieImage, setMovieImage] = useState({
+    images_url: '',
+  });
+  const [movieRating, setMovieRating] = useState(
+    movieRatingsInfo[
+      {
+        ratings_total: 0,
+        ratings_avg: 0,
+      }
+    ]
+  );
 
-  // const starRef = useRef(null);
-  // const commentRef = useRef(false);
+  //민지님 모달 오픈 코드
+  const openLogin = () => {
+    setLoginOpen(true);
+    disableScroll.on();
+  };
 
+  const closeLogin = () => {
+    setLoginOpen(false);
+    disableScroll.off();
+  };
+
+  const openPopup = () => {
+    setPopupOpen(true);
+    disableScroll.on();
+  };
+
+  const closePopup = () => {
+    setPopupOpen(close);
+    disableScroll.off();
+  };
+
+  //영화 전반적인 정보
+  useEffect(() => {
+    fetch('/movie/images/1', { method: 'GET' })
+      .then(res => res.json())
+      .then(data => {
+        setMovieInfo(data);
+      });
+  });
+
+  //영화 스틸컷
+  useEffect(() => {
+    fetch('/movie/images/movie', { method: 'GET' })
+      .then(res => res.json())
+      .then(data => {
+        setMovieInfo(data);
+      });
+  });
+
+  //영화 별점 정보 가져오기
+  useEffect(() => {
+    fetch(`rating/movie-ratings/${movieInfo.movie_id}`, { method: 'GET' })
+      .then(res => res.json())
+      .then(data => {
+        setMovieRating(data);
+      });
+  });
+
+  // 로그인 검증
+  useEffect(() => {
+    fetch('/user/verification', {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.message === 'NOW_LOGIN') {
+          setIsLogin(true);
+        } else if (result.message === 'NOW_LOGOUT') {
+          setIsLogin(false);
+        }
+      });
+  }, []);
+
+  //유져가 평가한 영화 별점 가져오기
+  useEffect(() => {
+    fetch(`/rating/${movieInfo.movie_id}`, { method: 'GET' })
+      .then(res => res.json())
+      .then(data => {
+        setRating(data);
+      });
+  }, rating);
+
+  //유저의 보고 싶어요 정보 가져오기
+  useEffect(() => {
+    fetch(`want/${movieInfo.movie_id}`, { method: 'GET' })
+      .then(res => res.json())
+      .then(data => {
+        setWant(data);
+      });
+  });
+
+  //별을 눌렀을때 별점 매기기 (로그인 성공시 별점 있을 때, 로그인 성공시 별점 없을때, 로그인 미성공 시)
+  const onStarClick = num => {
+    //평가가 없을 때
+    if (rating === 'N') {
+      setRating(num);
+      fetch(`/rating/${movieInfo.movie_id}`, {
+        method: 'POST',
+        requestbody: JSON.stringify({
+          movieid: movieInfo.movie_id,
+          ratingval: rating,
+        }),
+      }).then(res => res.json);
+    }
+    //평가를 취소할 때
+    if (rating === num) {
+      fetch(`/rating/${movieInfo.movie_id}`, { method: 'DELETE' })
+        .then(res.json())
+        .then(data => {});
+    }
+
+    //새로 누른 평가가 이전과 다를 때
+    if (rating != num && typeof rating === 'number') {
+      fetch(`/rating/${movieInfo.movie_id}`, {
+        method: 'PATCH',
+        requestbody: JSON.stringify({
+          movieid: movieInfo.movie_id,
+          ratingval: rating,
+        }),
+      }).then(res => res.json);
+    }
+  };
+
+  //별점  눌렀을떄 로그인 안되어 있을시 로그인 모달 열기, 로그인 되어있다면 onStarClick()
+  const checkLoginStar = num => {
+    if (!isLogin) {
+      setLoginModal(true);
+    }
+    if (isLogin) {
+      onStarClick(num);
+    }
+  };
+
+  //보고싶어요 눌렀을때 로그인 안되어 있을 시 로그인 모달 열기, 로그인 되어있다면 setWant
+
+  const checkLoginWant = () => {
+    if (!isLogin) {
+      setLoginModal(true);
+    }
+    if (isLogin) {
+      setWant(want === 0 ? 1 : 0);
+    }
+  };
+  //코멘트 눌렀을때 로그인 안되어있을 시 로그인 모달 열기, 로그인 되어 있다면 코멘트 모달 열기
+  const checkLoginComment = () => {
+    if (!isLogin) {
+      setLoginModal(true);
+    }
+    if (isLogin) {
+      commentEditOpen();
+    }
+  };
+
+  //코멘트 수정 열기
   const commentEditOpen = () => {
-    console.log('true');
     setCommentEdit(true);
   };
 
+  //코멘트 수정 닫기
   const commentEditClose = () => {
-    console.log('false');
     setCommentEdit(false);
   };
 
+  //별점에 따른 메세지
   useEffect(() => {
-    if (rating == 0) {
+    if (rating == 'N') {
       return setHowWasIt('평가하기');
     }
-    if (rating == 1) {
+    if (rating == 0.5) {
       return setHowWasIt('최악이에요');
     }
-    if (rating == 2) {
+    if (rating == 1) {
       return setHowWasIt('싫어요');
     }
-    if (rating == 3) {
+    if (rating == 1.5) {
       return setHowWasIt('재미없어요');
     }
-    if (rating == 4) {
+    if (rating == 2) {
       return setHowWasIt('별로에요');
     }
-    if (rating == 5) {
+    if (rating == 2.5) {
       return setHowWasIt('부족해요');
     }
-    if (rating == 6) {
+    if (rating == 3) {
       return setHowWasIt('보통이에요');
     }
-    if (rating == 7) {
+    if (rating == 3.5) {
       return setHowWasIt('볼만해요');
     }
-    if (rating == 8) {
+    if (rating == 4) {
       return setHowWasIt('재미있어요');
     }
-    if (rating == 9) {
+    if (rating == 4.5) {
       return setHowWasIt('훌륭해요!');
     }
-    if (rating == 10) {
+    if (rating == 5) {
       return setHowWasIt('최고에요!');
     }
   }, [rating]);
-  // useEffect(() => {
-  //   fetch('/data/ratingStars.json')
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       SetStarImg(data);
-  //     });
-  // }, []);
 
   return (
     <div className={styles.wholeWrapper}>
@@ -86,22 +248,30 @@ function MainTitleWithImage() {
         <img
           className={styles.movieSceneImage}
           src="https://raw.githubusercontent.com/nsoarim/wetchaimage/main/image/1/1.jpg"
+          // src = {movieImage.images_url}
         />
       </div>
       <section className={styles.infoBlock}>
         <img
           className={styles.poster}
           src="https://raw.githubusercontent.com/nsoarim/wetchaimage/main/poster/1.png"
+          // src={movieInfo.poster_url}
         />
         <section className={styles.titlesAndIcons}>
-          <article className={styles.movieTitle}>이별 후의 두 사람</article>
+          <article className={styles.movieTitle}>
+            이별 후의 두 사람
+            {/* {movieInfo.movie_name} */}
+          </article>
           <p className={styles.movieInfo}>
-            2001 &middot; 모험/가족/판타지 &middot; 영국/미국
+            {movieInfo.release_date} &middot; {movieInfo.genre_name} &middot;{' '}
+            {movieInfo.country_name}
           </p>
           <div className={styles.averageRating}>
             평균 <FontAwesomeIcon icon={faStar} className={styles.starIcon} />
             {'  '}
             4.3
+            {/* {movieRating.ratings_avg} */}
+            {/* {movieRating.ratings_total} */}
           </div>
           <article className={styles.clickables}>
             <div className={styles.starAndLetter}>
@@ -109,11 +279,24 @@ function MainTitleWithImage() {
               <div className={styles.rating}>
                 <div className={styles.eachStars}>
                   <img
-                    className={1 <= (hover || rating) ? styles.on : styles.off}
+                    className={
+                      0.5 <= (hover || rating) ? styles.on : styles.off
+                    }
                     src="/images/star/star_1.png"
-                    // key={stars.id}
                     onClick={() => {
-                      rating === 1 ? setRating(0) : setRating(1);
+                      // rating === 1 ? setRating(0) : setRating(1);
+                      checkLoginStar(0.5);
+                    }}
+                    onMouseEnter={() => setHover(0.5)}
+                    onMouseLeave={() => setHover(rating)}
+                  />
+                </div>
+                <div className={styles.eachStars}>
+                  <img
+                    className={1 <= (hover || rating) ? styles.on : styles.off}
+                    src="/images/star/star_2.png"
+                    onClick={() => {
+                      checkLoginStar(1);
                     }}
                     onMouseEnter={() => setHover(1)}
                     onMouseLeave={() => setHover(rating)}
@@ -121,11 +304,23 @@ function MainTitleWithImage() {
                 </div>
                 <div className={styles.eachStars}>
                   <img
-                    className={2 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_2.png"
-                    // key={stars.id}
+                    className={
+                      1.5 <= (hover || rating) ? styles.on : styles.off
+                    }
+                    src="/images/star/star_3.png"
                     onClick={() => {
-                      rating === 2 ? setRating(0) : setRating(2);
+                      checkLoginStar(1.5);
+                    }}
+                    onMouseEnter={() => setHover(1.5)}
+                    onMouseLeave={() => setHover(rating)}
+                  />
+                </div>
+                <div className={styles.eachStars}>
+                  <img
+                    className={2 <= (hover || rating) ? styles.on : styles.off}
+                    src="/images/star/star_4.png"
+                    onClick={() => {
+                      checkLoginStar(2);
                     }}
                     onMouseEnter={() => setHover(2)}
                     onMouseLeave={() => setHover(rating)}
@@ -133,11 +328,23 @@ function MainTitleWithImage() {
                 </div>
                 <div className={styles.eachStars}>
                   <img
-                    className={3 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_3.png"
-                    // key={stars.id}
+                    className={
+                      2.5 <= (hover || rating) ? styles.on : styles.off
+                    }
+                    src="/images/star/star_5.png"
                     onClick={() => {
-                      rating === 3 ? setRating(0) : setRating(3);
+                      checkLoginStar(2.5);
+                    }}
+                    onMouseEnter={() => setHover(2.5)}
+                    onMouseLeave={() => setHover(rating)}
+                  />
+                </div>
+                <div className={styles.eachStars}>
+                  <img
+                    className={3 <= (hover || rating) ? styles.on : styles.off}
+                    src="/images/star/star_6.png"
+                    onClick={() => {
+                      checkLoginStar(3);
                     }}
                     onMouseEnter={() => setHover(3)}
                     onMouseLeave={() => setHover(rating)}
@@ -145,11 +352,23 @@ function MainTitleWithImage() {
                 </div>
                 <div className={styles.eachStars}>
                   <img
-                    className={4 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_4.png"
-                    // key={stars.id}
+                    className={
+                      3.5 <= (hover || rating) ? styles.on : styles.off
+                    }
+                    src="/images/star/star_7.png"
                     onClick={() => {
-                      rating === 4 ? setRating(0) : setRating(4);
+                      checkLoginStar(3.5);
+                    }}
+                    onMouseEnter={() => setHover(3.5)}
+                    onMouseLeave={() => setHover(rating)}
+                  />
+                </div>
+                <div className={styles.eachStars}>
+                  <img
+                    className={4 <= (hover || rating) ? styles.on : styles.off}
+                    src="/images/star/star_8.png"
+                    onClick={() => {
+                      checkLoginStar(4);
                     }}
                     onMouseEnter={() => setHover(4)}
                     onMouseLeave={() => setHover(rating)}
@@ -157,73 +376,25 @@ function MainTitleWithImage() {
                 </div>
                 <div className={styles.eachStars}>
                   <img
-                    className={5 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_5.png"
-                    // key={stars.id}
+                    className={
+                      4.5 <= (hover || rating) ? styles.on : styles.off
+                    }
+                    src="/images/star/star_9.png"
                     onClick={() => {
-                      rating === 5 ? setRating(0) : setRating(5);
+                      checkLoginStar(4.5);
+                    }}
+                    onMouseEnter={() => setHover(4.5)}
+                    onMouseLeave={() => setHover(rating)}
+                  />
+                </div>
+                <div className={styles.eachStars}>
+                  <img
+                    className={5 <= (hover || rating) ? styles.on : styles.off}
+                    src="/images/star/star_10.png"
+                    onClick={() => {
+                      checkLoginStar(5);
                     }}
                     onMouseEnter={() => setHover(5)}
-                    onMouseLeave={() => setHover(rating)}
-                  />
-                </div>
-                <div className={styles.eachStars}>
-                  <img
-                    className={6 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_6.png"
-                    // key={stars.id}
-                    onClick={() => {
-                      rating === 6 ? setRating(0) : setRating(6);
-                    }}
-                    onMouseEnter={() => setHover(6)}
-                    onMouseLeave={() => setHover(rating)}
-                  />
-                </div>
-                <div className={styles.eachStars}>
-                  <img
-                    className={7 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_7.png"
-                    // key={stars.id}
-                    onClick={() => {
-                      rating === 7 ? setRating(0) : setRating(7);
-                    }}
-                    onMouseEnter={() => setHover(7)}
-                    onMouseLeave={() => setHover(rating)}
-                  />
-                </div>
-                <div className={styles.eachStars}>
-                  <img
-                    className={8 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_8.png"
-                    // key={stars.id}
-                    onClick={() => {
-                      rating === 8 ? setRating(0) : setRating(8);
-                    }}
-                    onMouseEnter={() => setHover(8)}
-                    onMouseLeave={() => setHover(rating)}
-                  />
-                </div>
-                <div className={styles.eachStars}>
-                  <img
-                    className={9 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_9.png"
-                    // key={stars.id}
-                    onClick={() => {
-                      rating === 9 ? setRating(0) : setRating(9);
-                    }}
-                    onMouseEnter={() => setHover(9)}
-                    onMouseLeave={() => setHover(rating)}
-                  />
-                </div>
-                <div className={styles.eachStars}>
-                  <img
-                    className={10 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_10.png"
-                    // key={stars.id}
-                    onClick={() => {
-                      rating === 10 ? setRating(0) : setRating(10);
-                    }}
-                    onMouseEnter={() => setHover(10)}
                     onMouseLeave={() => setHover(rating)}
                   />
                 </div>
@@ -235,9 +406,7 @@ function MainTitleWithImage() {
                 className={styles.wantToWrapper}
                 onMouseEnter={() => setWantHover(true)}
                 onMouseLeave={() => setWantHover(false)}
-                onClick={
-                  want === true ? () => setWant(false) : () => setWant(true)
-                }
+                onClick={checkLoginWant()}
               >
                 <FontAwesomeIcon
                   icon={want === true ? faBookmark : faPlus}
@@ -251,16 +420,13 @@ function MainTitleWithImage() {
                       : styles.notYet
                   }
                 />
-                {/* <FontAwesomeIcon icon={faBookmark} className={styles.yesPlease} /> 눌렀을때 리본으로 변경 */}
                 <p className={styles.wantTo}> 보고싶어요</p>
               </div>
               <div
                 className={styles.commentWrapper}
                 onMouseEnter={() => setCommentHover(true)}
                 onMouseLeave={() => setCommentHover(false)}
-                onClick={
-                  commentEdit === true ? commentEditClose : commentEditOpen
-                }
+                onClick={checkLoginComment()}
               >
                 <FontAwesomeIcon
                   icon={faPencil}
@@ -270,6 +436,7 @@ function MainTitleWithImage() {
                 />
                 <p className={styles.comment}> 코멘트</p>
               </div>
+              {/* <Comment_popup open={popupOpen} close={closePopup} /> //코멘트 등록/수정창 모달 */}
               <CommentEditComponent
                 open={commentEdit}
                 close={commentEditClose}
@@ -278,6 +445,7 @@ function MainTitleWithImage() {
           </article>
         </section>
       </section>
+      <Login open={loginOpen} close={closeLogin} />
     </div>
   );
 }
