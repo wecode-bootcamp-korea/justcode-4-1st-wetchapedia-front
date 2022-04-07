@@ -6,7 +6,7 @@ import disableScroll from 'disable-scroll';
 import SearchList from './Search_popup/SearchList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-
+import { Link } from 'react-router-dom';
 let arrayKey = 0;
 
 function Nav() {
@@ -98,14 +98,15 @@ function Nav() {
       <header className={styles.navBar_container}>
         <nav className={styles.navBar}>
           {' '}
-          <button
-            className={styles.logoWrapper}
-            onClick={() => {
-              window.location.reload();
-            }}
-          >
-            <img alt="로고" src="./images/wetcha.png" className={styles.logo} />
-          </button>
+          <Link to="/">
+            <button className={styles.logoWrapper}>
+              <img
+                alt="로고"
+                src="./images/wetcha.png"
+                className={styles.logo}
+              />
+            </button>
+          </Link>
           <div className={`${styles.component_wrapper} component_wrapper`}>
             <div className={styles.searchBar_wrapper}>
               <FontAwesomeIcon
