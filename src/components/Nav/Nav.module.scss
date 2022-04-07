@@ -15,8 +15,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   width: 1320px;
   height: 60px;
+  margin: 0 60px;
 }
 
 .logoWrapper {
@@ -33,7 +35,7 @@
 .component_wrapper {
   display: flex;
   justify-content: flex-end;
-  width: 50%;
+  width: 70%;
 }
 
 .searchBar_wrapper {
@@ -60,17 +62,41 @@
 
 .navBar__signInBtn {
   border: none;
+  height: 100%;
   margin: 0 15px;
   color: rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
   cursor: pointer;
 }
+
 .navBar__signUpBtn {
   padding: 0 15px;
+  height: 100%;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   font-weight: 600;
+  white-space: nowrap;
   cursor: pointer;
 }
+
+//로그인 시 렌더링되는 부분
+
+.user_welcome {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.user_welcome_name {
+  font-weight: 600;
+}
+
+.user_welcome_sayHi {
+  &:nth-child(2) {
+    margin-right: 5px;
+  }
+}
+
 //검색박스 - 영서
 .Search {
   position: absolute;
