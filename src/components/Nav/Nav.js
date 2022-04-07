@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Nav.module.scss';
 import Login from '../Login_popup/Login';
-import SignUp from '../Signup_popUp/SignUp';
+import SignUp from '../SignUp_popUp/SignUp';
 import disableScroll from 'disable-scroll';
 import SearchList from './Search_popup/SearchList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -64,11 +64,15 @@ function Nav() {
       item: item,
     };
     arrayKey += 1;
-    setsearchWord(searchWord.concat([items]));
-    goToDetailPage(item);
+    let newSearchword = searchWord;
+    newSearchword.unshift(items);
+    setsearchWord(newSearchword);
+    window.localStorage.setItem('item', JSON.stringify(searchWord));
+    goToSearchPage(items.item);
   };
 
-  const goToDetailPage = item => {
+  const goToSearchPage = item => {
+    console.log('gotoSearchpage', item);
     navigate(`/search?${item}`);
     window.location.reload();
   };
@@ -78,7 +82,8 @@ function Nav() {
   };
 
   useEffect(() => {
-    localStorage.setItem('item', JSON.stringify(searchWord));
+    console.log('useEffect', searchWord);
+    window.localStorage.setItem('item', JSON.stringify(searchWord));
   }, [searchWord]);
 
   // 로그인 검증
@@ -145,10 +150,8 @@ function Nav() {
                         검색어를 입력해 주세요.
                       </li>
                     )}
-                    {searchWord.map(comment => {
-                      return (
-                        <SearchList key={comment.id} item={comment.item} />
-                      );
+                    {searchWord.map((comment, k) => {
+                      return <SearchList key={k} item={comment.item} />;
                     })}
                   </ul>
                 </div>
