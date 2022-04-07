@@ -132,7 +132,7 @@ const SignUp = props => {
           <div className={styles.signUp__logo}>
             <img
               alt="logo"
-              src="./images/wetcha.png"
+              src="/./images/wetcha.png"
               className={styles.signUp__logo__img}
             />
           </div>
