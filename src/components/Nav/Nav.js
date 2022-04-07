@@ -114,12 +114,11 @@ function Nav() {
       <header className={styles.navBar_container}>
         <nav className={styles.navBar}>
           {' '}
-
           <Link to="/">
             <button className={styles.logoWrapper}>
               <img
                 alt="로고"
-                src="./images/wetcha.png"
+                src="/./images/wetcha.png"
                 className={styles.logo}
               />
             </button>
