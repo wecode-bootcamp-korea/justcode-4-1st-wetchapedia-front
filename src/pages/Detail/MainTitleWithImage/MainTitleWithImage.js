@@ -16,6 +16,7 @@ function MainTitleWithImage(props) {
   // const [starImg, SetStarImg] = useState({
   //   stars: [],
   // });
+  const [images, setImages] = useState([]);
   const [hover, setHover] = useState(0);
   const [rating, setRating] = useState(0);
   const [want, setWant] = useState(false);
@@ -26,6 +27,16 @@ function MainTitleWithImage(props) {
 
   // const starRef = useRef(null);
   // const commentRef = useRef(false);
+
+  useEffect(() => {
+    fetch(`/movie/images/${props.movie_id}`, {
+      method: 'GET',
+    })
+      .then(res => res.json())
+      .then(data => {
+        setImages(data.movieImages);
+      });
+  }, [props.movie_id]);
 
   const commentEditOpen = () => {
     console.log('true');
@@ -80,31 +91,26 @@ function MainTitleWithImage(props) {
   //       SetStarImg(data);
   //     });
   // }, []);
-
   return (
     <div className={styles.wholeWrapper}>
       <div className={styles.imageWrapper}>
         <img
           className={styles.movieSceneImage}
-          src={
-            'https://raw.githubusercontent.com/nsoarim/wetchaimage/main/image/1/1.jpg'
-          }
+          src={'http://' + images[0].images_url}
         />
       </div>
       <section className={styles.infoBlock}>
-        <img
-          className={styles.poster}
-          src="https://raw.githubusercontent.com/nsoarim/wetchaimage/main/poster/1.png"
-        />
+        <img className={styles.poster} src={`http://${props.poster_url}`} />
         <section className={styles.titlesAndIcons}>
-          <article className={styles.movieTitle}>이별 후의 두 사람</article>
+          <article className={styles.movieTitle}>{props.movie_name}</article>
           <p className={styles.movieInfo}>
-            2001 &middot; 모험/가족/판타지 &middot; 영국/미국
+            {props.release_date} &middot; {props.genre_name} &middot;{' '}
+            {props.country_name}
           </p>
           <div className={styles.averageRating}>
             평균 <FontAwesomeIcon icon={faStar} className={styles.starIcon} />
             {'  '}
-            4.3
+            {props.movieRating.ratings_avg} {props.movieRating.ratings_total}
           </div>
           <article className={styles.clickables}>
             <div className={styles.starAndLetter}>

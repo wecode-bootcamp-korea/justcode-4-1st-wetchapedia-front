@@ -54,7 +54,17 @@ function Detail() {
   return (
     <>
       <Nav />
-      <MainTitleWithImage />
+      <MainTitleWithImage
+        movie_name={movieInfo.movie_name}
+        movie_id={movieInfo.movie_id}
+        movie_story={movieInfo.movie_story}
+        release_date={movieInfo.release_date}
+        genre_name={movieInfo.genre_name}
+        country_name={movieInfo.country_name}
+        run_time={movieInfo.run_time}
+        poster_url={movieInfo.poster_url}
+        movieRating={movieRating}
+      />
       <div className={styles.Wrapper}>
         <div className={styles.detailWrapper}>
           <div className={styles.info__wrapper}>
