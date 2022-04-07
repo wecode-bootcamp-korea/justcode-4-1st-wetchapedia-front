@@ -5,7 +5,7 @@ function SimilarMovieImage(props) {
   const navigate = useNavigate();
 
   const goToDetailPage = () => {
-    navigate(`/Detail/${props.id}`);
+    navigate(`/detail/${props.id}`);
   };
   return (
     <section className={styles.SearchSections} onClick={goToDetailPage}>

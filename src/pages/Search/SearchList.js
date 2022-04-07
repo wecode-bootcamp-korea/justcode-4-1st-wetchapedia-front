@@ -21,7 +21,6 @@ function SearchMovie() {
         setMovieData(dataForSearch);
       });
   }, []);
-  console.log(urlName);
 
   return (
     <div className={styles.Search}>
