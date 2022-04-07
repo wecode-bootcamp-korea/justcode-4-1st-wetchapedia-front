@@ -23,7 +23,7 @@ function Footer() {
     })
       .then(res => res.json())
       .then(data => {
-        setRatingTotal(data.ratings_all);
+        setRatingTotal(data.allRatings[0].ratings_all);
       });
   }, []);
 

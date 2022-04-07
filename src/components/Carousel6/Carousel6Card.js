@@ -1,18 +1,19 @@
 import styles from './Carousel6.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
-function Carousel6Card({ movies }) {
+function Carousel6Card(props) {
+  const navigate = useNavigate();
+  const onClickWrapper = () => {
+    navigate(`/detail/${props.movie_id}`);
+  };
   return (
-    <section className={styles.posterArea}>
-      <img className={styles.posterImg} src={movies.imgUrl} />
+    <section className={styles.posterArea} onClick={onClickWrapper}>
+      <img className={styles.posterImg} src={props.imgUrl} />
       <div className={styles.info}>
-        <p className={styles.movieName}>{movies.name}</p>
-        <p className={styles.ratings}>
-          평균
-          <FontAwesomeIcon icon={faStar} className={styles.icon} />
-          {movies.ratings}
-        </p>
+        <p className={styles.movieName}>{props.title}</p>
+        <p className={styles.ratings}>{props.genre_name}</p>
       </div>
     </section>
   );
