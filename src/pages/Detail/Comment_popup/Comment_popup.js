@@ -3,12 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentSlash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-// import { text } from '@fortawesome/fontawesome-svg-core';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 const Comment_popup = props => {
   const [saveBtnActive, setSaveBtnActive] = useState(false);
   const [isCommented, setIsCommented] = useState(false);
   const [prevText, setPrevText] = useState('');
+  const [text, setText] = useState('');
   const [textareaValue, setTextAreaValue] = useState('');
   const [textValueLength, setTextValueLength] = useState(0);
   const [num, setNum] = useState(0);
@@ -39,7 +40,7 @@ const Comment_popup = props => {
   };
 
   useEffect(() => {
-    // setTextAreaValue(textareaValue);
+    setTextAreaValue(textareaValue);
     console.log(textareaValue);
   }, [textareaValue]);
 
@@ -48,17 +49,21 @@ const Comment_popup = props => {
     fetch(`/comment/content?movieId=${props.movieId}`, {
       method: 'GET',
     })
-      .then(res => res.json())
+      .then(res => (res.status === 201 ? res.json() : console.log('err')))
       .then(result => {
         console.log('result:', result);
-        setIsCommented(result.CommentResult);
+        setText(result.CommentResult[0].comment);
+        // console.log('isCommented', isCommented);
       });
   }, []);
 
-  // useEffect(() => {
-  //   setPrevText(isCommented[0].comment);
-  //   console.log(prevText);
-  // }, [isCommented]);
+  // 렌더링 안되는 오류
+  useEffect(() => {
+    // setPrevText(isCommented[0].comment);
+    console.log('text:', text);
+    setIsCommented(true);
+    textArea.current.value = text;
+  }, [text]);
 
   //comment 추가 (검증 완)
   const commentAdd = () => {
@@ -80,8 +85,19 @@ const Comment_popup = props => {
           // close Comment popup
         }
       });
+    setIsCommented(true);
+    console.log('추가 기능 완료');
   };
 
+  // 등록되어 있던 코멘트 렌더링
+  useEffect(() => {
+    console.log(isCommented);
+    setPrevText(textareaValue);
+  }, [isCommented]);
+  useEffect(() => {
+    textArea.current.value = prevText;
+    console.log('prevText:', prevText);
+  }, [prevText]);
   // comment 수정 (검증 완)
   const commentModify = () => {
     fetch('/comment/', {
@@ -136,11 +152,7 @@ const Comment_popup = props => {
                 handleSaveBtn();
               }}
               onChange={handleLength}
-            >
-              {/* {useEffect(() => {
-                return prevText.length > 0 ? prevText : 'bye';
-              }, [prevText])} */}
-            </textarea>
+            ></textarea>
           </main>
           <footer className={styles.footer}>
             <div>
@@ -160,14 +172,9 @@ const Comment_popup = props => {
                 className={styles.footer__right__saveBtn}
                 ref={saveBtn}
                 disabled={!saveBtnActive ? true : false}
-                onClick={() => {
-                  // 저장되어 있을 시에? Comment Modify : Comment Add
-                  // commentAdd();
-                  commentModify();
-                }}
-                // 저장되어 있을 시에? 수정 : 저장
+                onClick={isCommented ? commentModify : commentAdd}
               >
-                저장
+                {isCommented ? '수정' : '저장'}
               </button>
             </div>
           </footer>
