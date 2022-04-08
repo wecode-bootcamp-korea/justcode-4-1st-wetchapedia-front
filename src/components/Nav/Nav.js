@@ -25,7 +25,7 @@ function Nav(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (props.loginRequest == true) {
+    if (props.loginRequest > 0) {
       openLogin();
     }
   }, [props.loginRequest]);

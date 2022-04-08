@@ -16,7 +16,6 @@ import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 function Detail() {
   const params = useParams();
 
-  const [loginPopUpRequest, setLoginPopUpRequest] = useState(0);
   const [movieInfo, setmovieInfo] = useState({
     movie_id: 0,
     movie_name: '',
@@ -67,6 +66,10 @@ function Detail() {
       });
   }, []);
 
+  const [loginPopUpRequest, setLoginPopUpRequest] = useState(0);
+  function PopUpRequest() {
+    setLoginPopUpRequest(loginPopUpRequest + 1);
+  }
   return (
     <>
       <Nav loginRequest={loginPopUpRequest} />
@@ -78,7 +81,7 @@ function Detail() {
             <Comment
               islogin={isLogin}
               movieId={movieInfo.movie_id}
-              setLoginPopUpRequest={setLoginPopUpRequest}
+              LoginPopUpRequest={PopUpRequest}
             />
             <SimilarMovie genre_name={movieInfo.genre_name} />
           </div>

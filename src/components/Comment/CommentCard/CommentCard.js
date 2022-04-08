@@ -128,7 +128,7 @@ const CommentCard = props => {
         ) : (
           <button
             onClick={() => {
-              props.setLoginPopUpRequest(true);
+              props.LoginPopUpRequest();
             }}
             className={styles.LikeButton}
           >
