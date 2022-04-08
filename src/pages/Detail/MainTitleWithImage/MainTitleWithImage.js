@@ -16,9 +16,9 @@ function MainTitleWithImage(props) {
   // const [starImg, SetStarImg] = useState({
   //   stars: [],
   // });
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState('');
   const [hover, setHover] = useState(0);
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState({ userRatingInfo: { rating_val: 'N' } });
   const [want, setWant] = useState(false);
   const [howWasIt, setHowWasIt] = useState('평가하기');
   const [wantHover, setWantHover] = useState(false);
@@ -34,10 +34,18 @@ function MainTitleWithImage(props) {
     })
       .then(res => res.json())
       .then(data => {
-        setImages(data.movieImages);
+        setImages(data.movieImages[0].images_url);
       });
   }, [props.movie_id]);
 
+  useEffect(() => {
+    fetch(`/rating/${props.movie_id}`, { method: 'GET' })
+      .then(res => res.json())
+      .then(data => {
+        setRating(data);
+      });
+    console.log(rating.userRatingInfo.rating_val);
+  }, []);
   const commentEditOpen = () => {
     console.log('true');
     setCommentEdit(true);
@@ -48,38 +56,88 @@ function MainTitleWithImage(props) {
     setCommentEdit(false);
   };
 
+  const onStarClick = num => {
+    console.log(num);
+
+    console.log(rating);
+    // let editRating = { ...rating };
+
+    // if (rating.userRatingInfo.rating_val === 'N') {
+    // setRating({ userRatingInfo: { rating_val: num } });
+    //   console.log('평가 없을때', rating);
+    //   fetch(`/rating/${props.movie_id}`, {
+    //     method: 'POST',
+    //     requestbody: JSON.stringify({
+    //       movieid: props.movie_id,
+    //       ratingval: rating,
+    //     }),
+    //   }).then(res => res.json);
+    // }
+    // //평가를 취소할 때
+    if (rating.userRatingInfo.rating_val === num) {
+      setRating({ userRatingInfo: { rating_val: 0 } });
+      console.log('점수 삭제 할때', rating);
+    }
+
+    setRating({ userRatingInfo: { rating_val: num } });
+    console.log('별점 등록 완료');
+    fetch(`/rating/${props.movie_id}`, {
+      method: 'POST',
+      requestbody: JSON.stringify({
+        movieid: props.movie_id,
+        ratingval: rating,
+      }),
+    }).then(res => res.json);
+
+    // //새로 누른 평가가 이전과 다를 때
+    // if (
+    //   rating.userRatingInfo.rating_val != num &&
+    //   typeof rating.userRatingInfo.rating_val == 'number'
+    // ) {
+    //   setRating({ userRatingInfo: { rating_val: num } });
+    //   console.log('평가가 바뀔 때', rating);
+    //   fetch(`/rating/${props.movie_id}`, {
+    //     method: 'PATCH',
+    //     requestbody: JSON.stringify({
+    //       movieid: props.movie_id,
+    //       ratingval: rating,
+    //     }),
+    //   }).then(res => res.json);
+    // }
+    // };
+  };
   useEffect(() => {
-    if (rating == 0) {
+    if (rating.userRatingInfo.rating_val == 'N') {
       return setHowWasIt('평가하기');
     }
-    if (rating == 1) {
+    if (rating.userRatingInfo.rating_val == 0.5) {
       return setHowWasIt('최악이에요');
     }
-    if (rating == 2) {
+    if (rating.userRatingInfo.rating_val == 1) {
       return setHowWasIt('싫어요');
     }
-    if (rating == 3) {
+    if (rating.userRatingInfo.rating_val == 1.5) {
       return setHowWasIt('재미없어요');
     }
-    if (rating == 4) {
+    if (rating.userRatingInfo.rating_val == 2) {
       return setHowWasIt('별로에요');
     }
-    if (rating == 5) {
+    if (rating.userRatingInfo.rating_val == 2.5) {
       return setHowWasIt('부족해요');
     }
-    if (rating == 6) {
+    if (rating.userRatingInfo.rating_val == 3) {
       return setHowWasIt('보통이에요');
     }
-    if (rating == 7) {
+    if (rating.userRatingInfo.rating_val == 3.5) {
       return setHowWasIt('볼만해요');
     }
-    if (rating == 8) {
+    if (rating.userRatingInfo.rating_val == 4) {
       return setHowWasIt('재미있어요');
     }
-    if (rating == 9) {
+    if (rating.userRatingInfo.rating_val == 4.5) {
       return setHowWasIt('훌륭해요!');
     }
-    if (rating == 10) {
+    if (rating.userRatingInfo.rating_val == 5) {
       return setHowWasIt('최고에요!');
     }
   }, [rating]);
@@ -94,10 +152,7 @@ function MainTitleWithImage(props) {
   return (
     <div className={styles.wholeWrapper}>
       <div className={styles.imageWrapper}>
-        <img
-          className={styles.movieSceneImage}
-          src={'http://' + images[0].images_url}
-        />
+        <img className={styles.movieSceneImage} src={'http://' + images} />
       </div>
       <section className={styles.infoBlock}>
         <img className={styles.poster} src={`http://${props.poster_url}`} />
@@ -118,122 +173,173 @@ function MainTitleWithImage(props) {
               <div className={styles.rating}>
                 <div className={styles.eachStars}>
                   <img
-                    className={1 <= (hover || rating) ? styles.on : styles.off}
+                    className={
+                      0.5 <= (hover || rating.userRatingInfo.rating_val)
+                        ? styles.on
+                        : styles.off
+                    }
                     src="/images/star/star_1.png"
-                    // key={stars.id}
                     onClick={() => {
-                      rating === 1 ? setRating(0) : setRating(1);
+                      // rating === 1 ? setRating(0) : setRating(1);
+                      onStarClick(0.5);
+                    }}
+                    onMouseEnter={() => setHover(0.5)}
+                    onMouseLeave={() =>
+                      setHover(rating.userRatingInfo.rating_val)
+                    }
+                  />
+                </div>
+                <div className={styles.eachStars}>
+                  <img
+                    className={
+                      1 <= (hover || rating.userRatingInfo.rating_val)
+                        ? styles.on
+                        : styles.off
+                    }
+                    src="/images/star/star_2.png"
+                    onClick={() => {
+                      onStarClick(1);
                     }}
                     onMouseEnter={() => setHover(1)}
-                    onMouseLeave={() => setHover(rating)}
+                    onMouseLeave={() =>
+                      setHover(rating.userRatingInfo.rating_val)
+                    }
                   />
                 </div>
                 <div className={styles.eachStars}>
                   <img
-                    className={2 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_2.png"
-                    // key={stars.id}
+                    className={
+                      1.5 <= (hover || rating.userRatingInfo.rating_val)
+                        ? styles.on
+                        : styles.off
+                    }
+                    src="/images/star/star_3.png"
                     onClick={() => {
-                      rating === 2 ? setRating(0) : setRating(2);
+                      onStarClick(1.5);
+                    }}
+                    onMouseEnter={() => setHover(1.5)}
+                    onMouseLeave={() =>
+                      setHover(rating.userRatingInfo.rating_val)
+                    }
+                  />
+                </div>
+                <div className={styles.eachStars}>
+                  <img
+                    className={
+                      2 <= (hover || rating.userRatingInfo.rating_val)
+                        ? styles.on
+                        : styles.off
+                    }
+                    src="/images/star/star_4.png"
+                    onClick={() => {
+                      onStarClick(2);
                     }}
                     onMouseEnter={() => setHover(2)}
-                    onMouseLeave={() => setHover(rating)}
+                    onMouseLeave={() =>
+                      setHover(rating.userRatingInfo.rating_val)
+                    }
                   />
                 </div>
                 <div className={styles.eachStars}>
                   <img
-                    className={3 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_3.png"
-                    // key={stars.id}
+                    className={
+                      2.5 <= (hover || rating.userRatingInfo.rating_val)
+                        ? styles.on
+                        : styles.off
+                    }
+                    src="/images/star/star_5.png"
                     onClick={() => {
-                      rating === 3 ? setRating(0) : setRating(3);
+                      onStarClick(2.5);
+                    }}
+                    onMouseEnter={() => setHover(2.5)}
+                    onMouseLeave={() =>
+                      setHover(rating.userRatingInfo.rating_val)
+                    }
+                  />
+                </div>
+                <div className={styles.eachStars}>
+                  <img
+                    className={
+                      3 <= (hover || rating.userRatingInfo.rating_val)
+                        ? styles.on
+                        : styles.off
+                    }
+                    src="/images/star/star_6.png"
+                    onClick={() => {
+                      onStarClick(3);
                     }}
                     onMouseEnter={() => setHover(3)}
-                    onMouseLeave={() => setHover(rating)}
+                    onMouseLeave={() =>
+                      setHover(rating.userRatingInfo.rating_val)
+                    }
                   />
                 </div>
                 <div className={styles.eachStars}>
                   <img
-                    className={4 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_4.png"
-                    // key={stars.id}
+                    className={
+                      3.5 <= (hover || rating.userRatingInfo.rating_val)
+                        ? styles.on
+                        : styles.off
+                    }
+                    src="/images/star/star_7.png"
                     onClick={() => {
-                      rating === 4 ? setRating(0) : setRating(4);
+                      onStarClick(3.5);
+                    }}
+                    onMouseEnter={() => setHover(3.5)}
+                    onMouseLeave={() =>
+                      setHover(rating.userRatingInfo.rating_val)
+                    }
+                  />
+                </div>
+                <div className={styles.eachStars}>
+                  <img
+                    className={
+                      4 <= (hover || rating.userRatingInfo.rating_val)
+                        ? styles.on
+                        : styles.off
+                    }
+                    src="/images/star/star_8.png"
+                    onClick={() => {
+                      onStarClick(4);
                     }}
                     onMouseEnter={() => setHover(4)}
-                    onMouseLeave={() => setHover(rating)}
+                    onMouseLeave={() =>
+                      setHover(rating.userRatingInfo.rating_val)
+                    }
                   />
                 </div>
                 <div className={styles.eachStars}>
                   <img
-                    className={5 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_5.png"
-                    // key={stars.id}
+                    className={
+                      4.5 <= (hover || rating.userRatingInfo.rating_val)
+                        ? styles.on
+                        : styles.off
+                    }
+                    src="/images/star/star_9.png"
                     onClick={() => {
-                      rating === 5 ? setRating(0) : setRating(5);
+                      onStarClick(4.5);
+                    }}
+                    onMouseEnter={() => setHover(4.5)}
+                    onMouseLeave={() =>
+                      setHover(rating.userRatingInfo.rating_val)
+                    }
+                  />
+                </div>
+                <div className={styles.eachStars}>
+                  <img
+                    className={
+                      5 <= (hover || rating.userRatingInfo.rating_val)
+                        ? styles.on
+                        : styles.off
+                    }
+                    src="/images/star/star_10.png"
+                    onClick={() => {
+                      onStarClick(5);
                     }}
                     onMouseEnter={() => setHover(5)}
-                    onMouseLeave={() => setHover(rating)}
-                  />
-                </div>
-                <div className={styles.eachStars}>
-                  <img
-                    className={6 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_6.png"
-                    // key={stars.id}
-                    onClick={() => {
-                      rating === 6 ? setRating(0) : setRating(6);
-                    }}
-                    onMouseEnter={() => setHover(6)}
-                    onMouseLeave={() => setHover(rating)}
-                  />
-                </div>
-                <div className={styles.eachStars}>
-                  <img
-                    className={7 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_7.png"
-                    // key={stars.id}
-                    onClick={() => {
-                      rating === 7 ? setRating(0) : setRating(7);
-                    }}
-                    onMouseEnter={() => setHover(7)}
-                    onMouseLeave={() => setHover(rating)}
-                  />
-                </div>
-                <div className={styles.eachStars}>
-                  <img
-                    className={8 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_8.png"
-                    // key={stars.id}
-                    onClick={() => {
-                      rating === 8 ? setRating(0) : setRating(8);
-                    }}
-                    onMouseEnter={() => setHover(8)}
-                    onMouseLeave={() => setHover(rating)}
-                  />
-                </div>
-                <div className={styles.eachStars}>
-                  <img
-                    className={9 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_9.png"
-                    // key={stars.id}
-                    onClick={() => {
-                      rating === 9 ? setRating(0) : setRating(9);
-                    }}
-                    onMouseEnter={() => setHover(9)}
-                    onMouseLeave={() => setHover(rating)}
-                  />
-                </div>
-                <div className={styles.eachStars}>
-                  <img
-                    className={10 <= (hover || rating) ? styles.on : styles.off}
-                    src="/images/star/star_10.png"
-                    // key={stars.id}
-                    onClick={() => {
-                      rating === 10 ? setRating(0) : setRating(10);
-                    }}
-                    onMouseEnter={() => setHover(10)}
-                    onMouseLeave={() => setHover(rating)}
+                    onMouseLeave={() =>
+                      setHover(rating.userRatingInfo.rating_val)
+                    }
                   />
                 </div>
               </div>
