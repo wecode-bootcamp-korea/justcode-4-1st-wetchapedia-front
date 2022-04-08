@@ -4,9 +4,7 @@ import React, { useState, useEffect } from 'react';
 const CommentCard = props => {
   useEffect(() => {
     getLike();
-    if (props.islogin) {
-      checkLike();
-    }
+    checkLike();
   }, []);
 
   const [commentLikeCount, setCommentLikeCount] = useState(0);
@@ -42,11 +40,7 @@ const CommentCard = props => {
     })
       .then(res => res.json())
       .then(data => {
-        if (data != undefined) {
-          if (data.CommentLikeResult.length > 0) {
-            setCommentLikeCount(data.CommentLikeResult[0].count);
-          }
-        }
+        setCommentLikeCount(data.CommentLikeResult[0].count);
       });
   }
 
@@ -103,32 +97,21 @@ const CommentCard = props => {
       </div>
       <div className={styles.Line} />
       <div className={styles.CommentLikeWrapper}>
-        {props.islogin ? (
-          commentLike ? (
-            <button
-              onClick={() => {
-                deleteLike();
-                setCommentLikeCount(commentLikeCount - 1);
-              }}
-              className={`${styles.LikeButton} ${styles.LikeButton_on}`}
-            >
-              좋아요
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                postLike();
-                setCommentLikeCount(commentLikeCount + 1);
-              }}
-              className={styles.LikeButton}
-            >
-              좋아요
-            </button>
-          )
+        {commentLike ? (
+          <button
+            onClick={() => {
+              deleteLike();
+              setCommentLikeCount(commentLikeCount - 1);
+            }}
+            className={`${styles.LikeButton} ${styles.LikeButton_on}`}
+          >
+            좋아요
+          </button>
         ) : (
           <button
             onClick={() => {
-              props.LoginPopUpRequest();
+              postLike();
+              setCommentLikeCount(commentLikeCount + 1);
             }}
             className={styles.LikeButton}
           >

@@ -155,7 +155,7 @@ const Login = props => {
               className={styles.login__form__btn}
               style={{ cursor: cursor }}
               disabled={isActive}
-              onClick={handleLogin}
+              onClick={{ handleLogin }}
               type="button"
             >
               로그인

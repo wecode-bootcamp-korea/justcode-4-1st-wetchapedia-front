@@ -11,7 +11,6 @@ import Comment from '../../components/Comment/Comment';
 import SimilarMovie from './SimilarMovie/SimilarMovie';
 
 import styles from './Detail.module.scss';
-import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 
 function Detail() {
   const params = useParams();
@@ -32,20 +31,6 @@ function Detail() {
     ratings_total: 0,
     ratings_avg: 0,
   });
-  const [isLogin, setIsLogin] = useState(false);
-  useEffect(() => {
-    fetch('/user/verification', {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(result => {
-        if (result.message === 'NOW_LOGIN') {
-          setIsLogin(true);
-        } else if (result.message === 'NOW_LOGOUT') {
-          setIsLogin(false);
-        }
-      });
-  }, []);
 
   useEffect(() => {
     fetch(`/movie/${params.id}`, {
@@ -66,23 +51,25 @@ function Detail() {
       });
   }, []);
 
-  const [loginPopUpRequest, setLoginPopUpRequest] = useState(0);
-  function PopUpRequest() {
-    setLoginPopUpRequest(loginPopUpRequest + 1);
-  }
   return (
     <>
-      <Nav loginRequest={loginPopUpRequest} />
-      <MainTitleWithImage />
+      <Nav />
+      <MainTitleWithImage
+        movie_name={movieInfo.movie_name}
+        movie_id={movieInfo.movie_id}
+        movie_story={movieInfo.movie_story}
+        release_date={movieInfo.release_date}
+        genre_name={movieInfo.genre_name}
+        country_name={movieInfo.country_name}
+        run_time={movieInfo.run_time}
+        poster_url={movieInfo.poster_url}
+        movieRating={movieRating}
+      />
       <div className={styles.Wrapper}>
         <div className={styles.detailWrapper}>
           <div className={styles.info__wrapper}>
             <MainInfo movieInfo={movieInfo} movieRating={movieRating} />
-            <Comment
-              islogin={isLogin}
-              movieId={movieInfo.movie_id}
-              LoginPopUpRequest={PopUpRequest}
-            />
+            <Comment movieId={movieInfo.movie_id} />
             <SimilarMovie genre_name={movieInfo.genre_name} />
           </div>
           <div className={styles.adGalleryWrapper}>
