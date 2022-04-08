@@ -91,6 +91,7 @@ function Detail() {
         movieInfo={movieInfo}
         movieRating={movieRating}
         movieId={params.id}
+
       />
       <div className={styles.Wrapper}>
         <div className={styles.detailWrapper}>
