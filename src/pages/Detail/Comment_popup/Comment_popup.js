@@ -10,6 +10,7 @@ const Comment_popup = props => {
   const [saveBtnActive, setSaveBtnActive] = useState(false);
   const [isCommented, setIsCommented] = useState(false);
   const [prevText, setPrevText] = useState('');
+  const [text, setText] = useState('');
   const [textareaValue, setTextAreaValue] = useState('');
   const [textValueLength, setTextValueLength] = useState(0);
   const [num, setNum] = useState(0);
@@ -17,16 +18,15 @@ const Comment_popup = props => {
   const saveBtn = useRef();
   // const { open, close } = props;
 
-  // 글자수 세기
-  useEffect(() => {
-    setNum(textValueLength);
-  }, [textValueLength]);
-
   useEffect(() => {
     if (props.popupRequest > 0) {
       setPopupOpen(true);
     }
   }, [props.popupRequest]);
+  // 글자수 세기
+  useEffect(() => {
+    setNum(textValueLength);
+  }, [textValueLength]);
 
   const handleLength = e => {
     if (num > 200) {
@@ -46,7 +46,8 @@ const Comment_popup = props => {
   };
 
   useEffect(() => {
-    // setTextAreaValue(textareaValue);
+    setTextAreaValue(textareaValue);
+    // console.log('textAreaValue : ', textareaValue);
   }, [textareaValue]);
 
   //comment 가져오기
@@ -56,14 +57,28 @@ const Comment_popup = props => {
     })
       .then(res => res.json())
       .then(result => {
-        setIsCommented(result.CommentResult);
+        // console.log('result :', result);
+        if (result.CommentResult.length !== 0) {
+          setIsCommented(true);
+          setText(result.CommentResult[0].comment);
+        } else {
+          setIsCommented(false);
+        }
       });
-  }, []);
+  });
 
-  // useEffect(() => {
-  //   setPrevText(isCommented[0].comment);
-  //   console.log(prevText);
-  // }, [isCommented]);
+  useEffect(() => {});
+
+  useEffect(() => {
+    setPrevText(text);
+    // console.log('text :', text);
+    // textArea.current.value = text;
+  }, [text]);
+
+  useEffect(() => {
+    // console.log('prevText', prevText);
+    textArea.current.value = prevText;
+  }, [prevText]);
 
   //comment 추가 (검증 완)
   const commentAdd = () => {
@@ -86,18 +101,21 @@ const Comment_popup = props => {
           // close Comment popup
         }
       });
+    setPopupOpen(false);
   };
 
   // comment 수정 (검증 완)
+
   const commentModify = () => {
     fetch('/comment/', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
+
       body: JSON.stringify({
         comment: textareaValue,
-        movieId: props.movieID,
+        movieId: props.movieId,
       }),
     })
       .then(res => res.json())
@@ -106,88 +124,80 @@ const Comment_popup = props => {
           alert('수정 완료!');
         }
       });
+    setPopupOpen(false);
   };
 
   return (
     <>
-      {popupOpen ? (
-        <div className="Comment_popup">
-          <div
-            className={
-              // open ? `${styles.modal} ${styles.openModal}` : `${styles.modal}`
-              `${styles.modal} ${styles.openModal}`
-              // `${styles.modal}`
-            }
-            // onclick={close}
-          >
-            <section className={styles.comment}>
-              <header className={styles.header}>
-                <span className={styles.header__movieTitle}>
-                  {props.movieName}
-                </span>
-                <div
-                  className={styles.header__closeBtn}
-                  onClick={() => setPopupOpen(false)}
+      {/* {popupOpen ? ( */}
+      <div className="Comment_popup">
+        <div
+          className={
+            popupOpen
+              ? `${styles.modal} ${styles.openModal}`
+              : `${styles.modal}`
+          }
+          // onclick={close}
+        >
+          <section className={styles.comment}>
+            <header className={styles.header}>
+              <span className={styles.header__movieTitle}>
+                {props.movieName}
+              </span>
+              <div
+                className={styles.header__closeBtn}
+                onClick={() => setPopupOpen(false)}
+              >
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  className={styles.header__closeBtn__icon}
+                />
+              </div>
+            </header>
+            <main className={styles.main} onClick={handletextAreaOnFocus}>
+              <textarea
+                className={styles.textarea}
+                placeholder="이 작품에 대한 생각을 자유롭게 표현해주세요."
+                ref={textArea}
+                onKeyUp={e => {
+                  setTextValueLength(e.target.value.length);
+                  setTextAreaValue(e.target.value);
+                  handleSaveBtn();
+                }}
+                onChange={handleLength}
+              ></textarea>
+            </main>
+            <footer className={styles.footer}>
+              <div>
+                <FontAwesomeIcon
+                  icon={faTwitter}
+                  className={styles.footer__icons}
+                />
+                |
+                <FontAwesomeIcon
+                  icon={faCommentSlash}
+                  className={styles.footer__icons}
+                />
+              </div>
+              <div className={styles.footer__right}>
+                <div className={styles.footer__right__num}>{`${num}/200`}</div>
+                <button
+                  className={styles.footer__right__saveBtn}
+                  ref={saveBtn}
+                  disabled={!saveBtnActive ? true : false}
+                  onClick={
+                    isCommented ? commentModify : commentAdd
+                    // setPopupOpen(false);
+                  }
                 >
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    className={styles.header__closeBtn__icon}
-                  />
-                </div>
-              </header>
-              <main className={styles.main} onClick={handletextAreaOnFocus}>
-                <textarea
-                  className={styles.textarea}
-                  placeholder="이 작품에 대한 생각을 자유롭게 표현해주세요."
-                  ref={textArea}
-                  onKeyUp={e => {
-                    setTextValueLength(e.target.value.length);
-                    setTextAreaValue(e.target.value);
-                    handleSaveBtn();
-                  }}
-                  onChange={handleLength}
-                >
-                  {/* {useEffect(() => {
-                return prevText.length > 0 ? prevText : 'bye';
-              }, [prevText])} */}
-                </textarea>
-              </main>
-              <footer className={styles.footer}>
-                <div>
-                  <FontAwesomeIcon
-                    icon={faTwitter}
-                    className={styles.footer__icons}
-                  />
-                  |
-                  <FontAwesomeIcon
-                    icon={faCommentSlash}
-                    className={styles.footer__icons}
-                  />
-                </div>
-                <div className={styles.footer__right}>
-                  <div
-                    className={styles.footer__right__num}
-                  >{`${num}/200`}</div>
-                  <button
-                    className={styles.footer__right__saveBtn}
-                    ref={saveBtn}
-                    disabled={!saveBtnActive ? true : false}
-                    onClick={() => {
-                      // 저장되어 있을 시에? Comment Modify : Comment Add
-                      commentAdd();
-                      setPopupOpen(false);
-                      //commentModify();
-                    }}
-                    // 저장되어 있을 시에? 수정 : 저장
-                  >
-                    저장
-                  </button>
-                </div>
-              </footer>
-            </section>
-          </div>
+                  {isCommented ? '수정' : '저장'}
+                </button>
+              </div>
+            </footer>
+          </section>
         </div>
-      ) : null}
+      </div>
+      {/* ) : null} */}
     </>
   );
 };

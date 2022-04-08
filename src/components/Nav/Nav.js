@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Nav.module.scss';
-import Login from '../Login_popUp/Login';
+import Login from '../Login_popup/Login';
 
 import SignUp from '../SignUp_popUp/SignUp';
 
 import disableScroll from 'disable-scroll';
-import SearchList from './Search_popUp/SearchList';
+import SearchList from './Search_popup/SearchList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
