@@ -27,7 +27,6 @@ function MainTitleWithImage(props) {
     CheckWant();
     Checkrating();
   }, []);
-
   useEffect(() => {
     if (rating != -1 && isRating == false) {
       PostRating(rating * 0.5);
@@ -167,24 +166,6 @@ function MainTitleWithImage(props) {
       });
   }, [props.movieId]);
 
-  useEffect(() => {
-    fetch(`/movie/images/${props.movie_id}`, {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        setImages(data.movieImages[0].images_url);
-      });
-  }, [props.movie_id]);
-
-  useEffect(() => {
-    fetch(`/rating/${props.movie_id}`, { method: 'GET' })
-      .then(res => res.json())
-      .then(data => {
-        setRating(data);
-      });
-    console.log(rating.userRatingInfo.rating_val);
-  }, []);
   const commentEditOpen = () => {
     console.log('true');
     setCommentEdit(true);
@@ -195,88 +176,38 @@ function MainTitleWithImage(props) {
     setCommentEdit(false);
   };
 
-  const onStarClick = num => {
-    console.log(num);
-
-    console.log(rating);
-    // let editRating = { ...rating };
-
-    // if (rating.userRatingInfo.rating_val === 'N') {
-    // setRating({ userRatingInfo: { rating_val: num } });
-    //   console.log('평가 없을때', rating);
-    //   fetch(`/rating/${props.movie_id}`, {
-    //     method: 'POST',
-    //     requestbody: JSON.stringify({
-    //       movieid: props.movie_id,
-    //       ratingval: rating,
-    //     }),
-    //   }).then(res => res.json);
-    // }
-    // //평가를 취소할 때
-    if (rating.userRatingInfo.rating_val === num) {
-      setRating({ userRatingInfo: { rating_val: 0 } });
-      console.log('점수 삭제 할때', rating);
-    }
-
-    setRating({ userRatingInfo: { rating_val: num } });
-    console.log('별점 등록 완료');
-    fetch(`/rating/${props.movie_id}`, {
-      method: 'POST',
-      requestbody: JSON.stringify({
-        movieid: props.movie_id,
-        ratingval: rating,
-      }),
-    }).then(res => res.json);
-
-    // //새로 누른 평가가 이전과 다를 때
-    // if (
-    //   rating.userRatingInfo.rating_val != num &&
-    //   typeof rating.userRatingInfo.rating_val == 'number'
-    // ) {
-    //   setRating({ userRatingInfo: { rating_val: num } });
-    //   console.log('평가가 바뀔 때', rating);
-    //   fetch(`/rating/${props.movie_id}`, {
-    //     method: 'PATCH',
-    //     requestbody: JSON.stringify({
-    //       movieid: props.movie_id,
-    //       ratingval: rating,
-    //     }),
-    //   }).then(res => res.json);
-    // }
-    // };
-  };
   useEffect(() => {
-    if (rating.userRatingInfo.rating_val == 'N') {
+    if (rating == 0) {
       return setHowWasIt('평가하기');
     }
-    if (rating.userRatingInfo.rating_val == 0.5) {
+    if (rating == 1) {
       return setHowWasIt('최악이에요');
     }
-    if (rating.userRatingInfo.rating_val == 1) {
+    if (rating == 2) {
       return setHowWasIt('싫어요');
     }
-    if (rating.userRatingInfo.rating_val == 1.5) {
+    if (rating == 3) {
       return setHowWasIt('재미없어요');
     }
-    if (rating.userRatingInfo.rating_val == 2) {
+    if (rating == 4) {
       return setHowWasIt('별로에요');
     }
-    if (rating.userRatingInfo.rating_val == 2.5) {
+    if (rating == 5) {
       return setHowWasIt('부족해요');
     }
-    if (rating.userRatingInfo.rating_val == 3) {
+    if (rating == 6) {
       return setHowWasIt('보통이에요');
     }
-    if (rating.userRatingInfo.rating_val == 3.5) {
+    if (rating == 7) {
       return setHowWasIt('볼만해요');
     }
-    if (rating.userRatingInfo.rating_val == 4) {
+    if (rating == 8) {
       return setHowWasIt('재미있어요');
     }
-    if (rating.userRatingInfo.rating_val == 4.5) {
+    if (rating == 9) {
       return setHowWasIt('훌륭해요!');
     }
-    if (rating.userRatingInfo.rating_val == 5) {
+    if (rating == 10) {
       return setHowWasIt('최고에요!');
     }
   }, [rating]);
@@ -288,6 +219,7 @@ function MainTitleWithImage(props) {
   //       SetStarImg(data);
   //     });
   // }, []);
+
   return (
     <div className={styles.wholeWrapper}>
       <div className={styles.imageWrapper}>
