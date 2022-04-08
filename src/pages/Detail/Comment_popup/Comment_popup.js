@@ -57,7 +57,6 @@ const Comment_popup = props => {
     })
       .then(res => res.json())
       .then(result => {
-        // console.log('result :', result);
         if (result.CommentResult.length !== 0) {
           setIsCommented(true);
           setText(result.CommentResult[0].comment);
@@ -65,7 +64,7 @@ const Comment_popup = props => {
           setIsCommented(false);
         }
       });
-  });
+  }, []);
 
   useEffect(() => {});
 
@@ -125,6 +124,7 @@ const Comment_popup = props => {
         }
       });
     setPopupOpen(false);
+    window.location.reload();
   };
 
   return (

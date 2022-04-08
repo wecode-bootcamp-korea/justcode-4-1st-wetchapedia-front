@@ -91,7 +91,6 @@ function Nav(props) {
   };
 
   useEffect(() => {
-    console.log('useEffect', searchWord);
     window.localStorage.setItem('item', JSON.stringify(searchWord));
   }, [searchWord]);
 

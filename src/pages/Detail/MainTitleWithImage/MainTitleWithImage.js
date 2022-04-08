@@ -41,7 +41,6 @@ function MainTitleWithImage(props) {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         if (data.wantInfo[0].want_val == 'N') {
           setnoWant(true);
         } else if (data.wantInfo[0].want_val == '1') {

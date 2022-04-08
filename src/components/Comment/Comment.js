@@ -78,6 +78,7 @@ const Comment = props => {
         {commentList.map(comment => {
           return (
             <CommentCard
+              key={comment.comment_id}
               LoginPopUpRequest={props.LoginPopUpRequest}
               islogin={props.islogin}
               userName={comment.name}

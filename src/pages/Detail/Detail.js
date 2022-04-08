@@ -80,6 +80,7 @@ function Detail() {
     <>
       <Nav loginRequest={loginPopUpRequest} />
       <Comment_popup
+        key={movieInfo.movie_id}
         movieId={movieInfo.movie_id}
         movieName={movieInfo.movie_name}
         popupRequest={commentPopUpRequest}
