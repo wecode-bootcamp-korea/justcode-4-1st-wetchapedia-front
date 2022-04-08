@@ -27,7 +27,6 @@ function MainTitleWithImage(props) {
     CheckWant();
     Checkrating();
   }, []);
-
   useEffect(() => {
     if (rating != -1 && isRating == false) {
       PostRating(rating * 0.5);
