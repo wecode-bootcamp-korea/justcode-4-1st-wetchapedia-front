@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Nav.module.scss';
-import Login from '../Login_popup/Login';
+import Login from '../Login_popUp/Login';
 
 import SignUp from '../SignUp_popUp/SignUp';
 
 import disableScroll from 'disable-scroll';
-import SearchList from './Search_popup/SearchList';
+import SearchList from './Search_popUp/SearchList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 let arrayKey = 0;
 
-function Nav() {
+function Nav(props) {
   const [isLogin, setIsLogin] = useState(false);
   const [userName, setUserName] = useState('');
   const [loginOpen, setLoginOpen] = useState(false);
@@ -23,6 +23,12 @@ function Nav() {
     JSON.parse(localStorage.getItem('item')) || []
   );
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (props.loginRequest > 0) {
+      openLogin();
+    }
+  }, [props.loginRequest]);
 
   const openLogin = () => {
     setLoginOpen(true);

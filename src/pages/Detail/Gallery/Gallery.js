@@ -48,13 +48,13 @@ function Gallery(props) {
     event.stopPropagation();
     setImgIndex(imgIndex - 1);
     totalimageindex -= 1;
-    setImgUrls(images[totalimageindex].poster_url);
+    setImgUrls('http://' + images[totalimageindex].images_url);
   };
   const RightPage = event => {
     event.stopPropagation();
     setImgIndex(imgIndex + 1);
     totalimageindex = totalimageindex + 1;
-    setImgUrls(images[totalimageindex].poster_url);
+    setImgUrls('http://' + images[totalimageindex].images_url);
   };
   useEffect(() => {
     totalimageindex === 0 ? setLeftShow(true) : setLeftShow(false);
@@ -77,11 +77,11 @@ function Gallery(props) {
       <div className={styles.Gallery}>
         <div className={styles.GalleryTitle}>갤러리</div>
         <div className={styles.ImageSection} onScroll={setCursor} ref={Section}>
-          {images.map(image => {
+          {images.map((image, k) => {
             return (
               <GalleryImages
-                key={image.id}
-                index={image.id}
+                key={k}
+                index={k}
                 img={'http://' + image.images_url}
                 name={image.name}
                 modal={modal}
