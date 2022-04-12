@@ -81,7 +81,6 @@ function Nav(props) {
   };
 
   const goToSearchPage = item => {
-    console.log('gotoSearchpage', item);
     navigate(`/search?${item}`);
     window.location.reload();
   };
@@ -119,7 +118,7 @@ function Nav(props) {
       <header className={styles.navBar_container}>
         <nav className={styles.navBar}>
           {' '}
-          <Link to="/">
+          <Link to="/" onUpdate={() => window.scrollTo(0, 0)}>
             <button className={styles.logoWrapper}>
               <img
                 alt="로고"

@@ -77,11 +77,11 @@ function Gallery(props) {
       <div className={styles.Gallery}>
         <div className={styles.GalleryTitle}>갤러리</div>
         <div className={styles.ImageSection} onScroll={setCursor} ref={Section}>
-          {images.map((image, k) => {
+          {images.map((image, index) => {
             return (
               <GalleryImages
-                key={k}
-                index={k}
+                key={index}
+                index={index}
                 img={'http://' + image.images_url}
                 name={image.name}
                 modal={modal}
