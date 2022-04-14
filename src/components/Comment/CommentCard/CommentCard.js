@@ -1,5 +1,7 @@
 import styles from './CommentCard.module.scss';
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 const CommentCard = props => {
   useEffect(() => {
@@ -99,7 +101,11 @@ const CommentCard = props => {
       <div className={styles.CommentContentWrapper}>{shortCommentContent}</div>
       <div className={styles.Line} />
       <div className={styles.CommentLikeWrapper}>
-        <div className={styles.LikeCount}>{commentLikeCount}</div>
+        <div className={styles.LikeCount}>
+          <FontAwesomeIcon icon={faHeart} />
+          {` `}
+          {commentLikeCount}
+        </div>
       </div>
       <div className={styles.Line} />
       <div className={styles.CommentLikeWrapper}>

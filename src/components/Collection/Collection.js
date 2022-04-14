@@ -25,7 +25,7 @@ function Collection() {
         let k = 0;
         for (let i = 0; i < 3; i++) {
           for (let j = 0; j < 8; j++) {
-            arrData[i][j] = data.watchaCollectionData[k++];
+            arrData[i][j] = data.movies[k++];
           }
         }
         setMovieList(arrData);
