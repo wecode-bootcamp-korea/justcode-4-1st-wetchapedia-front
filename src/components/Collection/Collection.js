@@ -16,7 +16,7 @@ function Collection() {
   const innerRef = useRef();
 
   useEffect(() => {
-    fetch(`http://localhost:8000/movie?grouping=category&partitionLimit=8`, {
+    fetch(`/movie?grouping=category&partitionLimit=8`, {
       method: 'GET',
     })
       .then(res => res.json())
