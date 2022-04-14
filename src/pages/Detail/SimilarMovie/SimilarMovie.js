@@ -10,7 +10,7 @@ function SimilarMovie(props) {
     })
       .then(res => res.json())
       .then(data => {
-        setMovieData(data.Movie);
+        setMovieData(data.movies);
       });
   }, [props.genre_name]);
   return (

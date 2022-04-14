@@ -14,7 +14,7 @@ function SearchMovie() {
     })
       .then(res => res.json())
       .then(data => {
-        let dataForSearch = data.searchedMovies.MovieList;
+        let dataForSearch = data.movies.MovieList;
         dataForSearch.map(item => {
           item.release_date = item.release_date.split('/')[0];
         });

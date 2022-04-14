@@ -73,6 +73,7 @@ function Detail() {
   function RequestCommentPopup() {
     setCommentPopUpRequest(commentPopUpRequest + 1);
   }
+
   function RequesLoginPopup() {
     setLoginPopUpRequest(loginPopUpRequest + 1);
   }
