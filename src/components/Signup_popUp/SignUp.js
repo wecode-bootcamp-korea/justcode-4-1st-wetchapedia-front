@@ -87,7 +87,7 @@ const SignUp = props => {
 
   // 서버 연결 회원가입
   const handleSignup = () => {
-    fetch(' http://localhost:8000/user', {
+    fetch('/user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

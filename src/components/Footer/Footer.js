@@ -18,7 +18,7 @@ function Footer() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8000/rating/users-ratings`, {
+    fetch(`/rating/users-ratings`, {
       method: 'GET',
     })
       .then(res => res.json())

@@ -43,12 +43,9 @@ const Carousel5 = props => {
 
   const [movieList, setMovieList] = useState([]);
   useEffect(() => {
-    fetch(
-      `http://localhost:8000/movie?category-id=${props.CategoryId}&limit=${props.limit}`,
-      {
-        method: 'GET',
-      }
-    )
+    fetch(`/movie?category-id=${props.CategoryId}&limit=${props.limit}`, {
+      method: 'GET',
+    })
       .then(res => res.json())
       .then(data => {
         let dataForCarousel = data.movies;

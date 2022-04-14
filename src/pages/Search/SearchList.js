@@ -9,7 +9,7 @@ function SearchMovie() {
   urlName = urlName.substr(1);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/movie?search=${urlName}`, {
+    fetch(`/movie?search=${urlName}`, {
       method: 'GET',
     })
       .then(res => res.json())
