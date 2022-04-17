@@ -38,6 +38,7 @@ function MainTitleWithImage(props) {
 
   function CheckWant() {
     fetch(`http://${BASE_URL}:8000/want/${props.movieId}`, {
+      credentials: 'include',
       method: 'GET',
     })
       .then(res => res.json())
@@ -57,6 +58,7 @@ function MainTitleWithImage(props) {
   function PostWant() {
     fetch(`http://${BASE_URL}:8000/want/`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -82,6 +84,7 @@ function MainTitleWithImage(props) {
     }
     fetch(`/want`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -97,6 +100,7 @@ function MainTitleWithImage(props) {
   function PostRating(val) {
     fetch(`http://${BASE_URL}:8000/rating/`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -115,6 +119,7 @@ function MainTitleWithImage(props) {
   function Checkrating() {
     fetch(`http://${BASE_URL}:8000/rating/${props.movieId}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {
@@ -130,6 +135,7 @@ function MainTitleWithImage(props) {
   function PatchRating(val) {
     fetch(`http://${BASE_URL}:8000/rating`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -147,6 +153,7 @@ function MainTitleWithImage(props) {
   function DeleteRating() {
     fetch(`http://${BASE_URL}:8000/rating/${props.movieId}`, {
       method: 'DELETE',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(props.RequestReloadRating());
@@ -155,6 +162,7 @@ function MainTitleWithImage(props) {
   useEffect(() => {
     fetch(`http://${BASE_URL}:8000/movie/images/${props.movieId}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {

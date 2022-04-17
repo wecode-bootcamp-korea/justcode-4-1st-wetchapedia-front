@@ -7,7 +7,7 @@ function SearchList(props) {
   const navigate = useNavigate();
 
   const goToSearchPage = () => {
-    navigate(`http://${BASE_URL}:8000/search?${props.item}`);
+    navigate(`/search?${props.item}`);
     window.scrollTo(0, 0);
     window.location.reload();
   };

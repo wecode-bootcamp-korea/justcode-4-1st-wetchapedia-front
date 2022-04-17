@@ -101,7 +101,7 @@ const Login = props => {
           console.log(result.message);
           alert('로그인 성공!');
           close();
-          // window.location.reload();
+          window.location.reload();
         }
       });
   };
