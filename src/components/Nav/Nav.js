@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Nav.module.scss';
 import Login from '../Login_popup/Login';
-
-import SignUp from '../SignUp_popUp/SignUp';
-
+import SignUp from '../Signup_popUp/SignUp';
 import disableScroll from 'disable-scroll';
 import SearchList from './Search_popup/SearchList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../config';
 
 let arrayKey = 0;
 
@@ -95,8 +94,9 @@ function Nav(props) {
 
   // 로그인 검증
   useEffect(() => {
-    fetch('/user/verification', {
+    fetch(`http://${BASE_URL}:8000/user/verification`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(result => {

@@ -10,6 +10,7 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import CommentDelete from './CommentDeleteModal';
 import CommentEditComponent from './CommentEditComponent';
+import { BASE_URL } from '../../../config';
 
 function MainTitleWithImage(props) {
   const [hover, setHover] = useState(0);
@@ -36,7 +37,7 @@ function MainTitleWithImage(props) {
   }, [rating]);
 
   function CheckWant() {
-    fetch(`/want/${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/want/${props.movieId}`, {
       method: 'GET',
     })
       .then(res => res.json())
@@ -54,7 +55,7 @@ function MainTitleWithImage(props) {
   }
 
   function PostWant() {
-    fetch('/want/', {
+    fetch(`http://${BASE_URL}:8000/want/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +95,7 @@ function MainTitleWithImage(props) {
   }
 
   function PostRating(val) {
-    fetch('/rating/', {
+    fetch(`http://${BASE_URL}:8000/rating/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -112,7 +113,7 @@ function MainTitleWithImage(props) {
   }
 
   function Checkrating() {
-    fetch(`/rating/${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/rating/${props.movieId}`, {
       method: 'GET',
     })
       .then(res => res.json())
@@ -127,7 +128,7 @@ function MainTitleWithImage(props) {
   }
 
   function PatchRating(val) {
-    fetch(`/rating`, {
+    fetch(`http://${BASE_URL}:8000/rating`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -144,7 +145,7 @@ function MainTitleWithImage(props) {
   }
 
   function DeleteRating() {
-    fetch(`/rating/${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/rating/${props.movieId}`, {
       method: 'DELETE',
     })
       .then(res => res.json())
@@ -152,7 +153,7 @@ function MainTitleWithImage(props) {
   }
 
   useEffect(() => {
-    fetch(`/movie/images/${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/movie/images/${props.movieId}`, {
       method: 'GET',
     })
       .then(res => res.json())

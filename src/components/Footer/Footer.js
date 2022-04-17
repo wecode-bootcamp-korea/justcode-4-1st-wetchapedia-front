@@ -3,6 +3,7 @@ import { faBlog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config';
 
 function Footer() {
   const [ratingTotal, setRatingTotal] = useState();
@@ -18,7 +19,7 @@ function Footer() {
   };
 
   useEffect(() => {
-    fetch(`/rating/users-ratings`, {
+    fetch(`http://${BASE_URL}:8000/rating/users-ratings`, {
       method: 'GET',
     })
       .then(res => res.json())

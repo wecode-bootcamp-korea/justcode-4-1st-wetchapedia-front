@@ -2,6 +2,7 @@ import styles from './SignUp.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { useEffect, useState, useRef } from 'react';
+import { BASE_URL } from '../../config';
 
 const SignUp = props => {
   const [id, setId] = useState('');
@@ -87,8 +88,9 @@ const SignUp = props => {
 
   // 서버 연결 회원가입
   const handleSignup = () => {
-    fetch('/user', {
+    fetch(`http://${BASE_URL}:8000/user`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },

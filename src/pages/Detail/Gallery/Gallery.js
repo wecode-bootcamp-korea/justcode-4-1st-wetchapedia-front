@@ -7,6 +7,7 @@ import {
   faCircleChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import disableScroll from 'disable-scroll';
+import { BASE_URL } from '../../../config';
 
 function Gallery(props) {
   const [images, setImages] = useState([]);
@@ -63,7 +64,7 @@ function Gallery(props) {
       : setRightShow(false);
   }, [imgIndex]);
   useEffect(() => {
-    fetch(`/movie/images/${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/movie/images/${props.movieId}`, {
       method: 'GET',
     })
       .then(res => res.json())
