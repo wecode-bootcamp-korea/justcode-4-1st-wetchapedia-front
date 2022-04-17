@@ -38,6 +38,7 @@ function Detail() {
   useEffect(() => {
     fetch(`http://${BASE_URL}:8000/user/verification`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(result => {
@@ -52,6 +53,7 @@ function Detail() {
   useEffect(() => {
     fetch(`http://${BASE_URL}:8000/movie/${params.id}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {
@@ -61,6 +63,7 @@ function Detail() {
 
     fetch(`http://${BASE_URL}:8000/rating/movie-ratings/${params.id}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {
