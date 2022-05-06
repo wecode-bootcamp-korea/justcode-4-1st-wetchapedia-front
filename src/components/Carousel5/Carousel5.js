@@ -6,6 +6,7 @@ import {
   faCircleChevronRight,
   faCircleChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
+import { BASE_URL } from '../../config';
 
 const Carousel5 = props => {
   const SliderWrapperRef = React.useRef();
@@ -43,9 +44,12 @@ const Carousel5 = props => {
 
   const [movieList, setMovieList] = useState([]);
   useEffect(() => {
-    fetch(`/movie?category-id=${props.CategoryId}&limit=${props.limit}`, {
-      method: 'GET',
-    })
+    fetch(
+      `http://${BASE_URL}:8000/movie?category-id=${props.CategoryId}&limit=${props.limit}`,
+      {
+        method: 'GET',
+      }
+    )
       .then(res => res.json())
       .then(data => {
         let dataForCarousel = data.movies;

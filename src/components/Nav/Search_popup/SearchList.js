@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Search.module.scss';
+import { BASE_URL } from '../../../config';
 
 function SearchList(props) {
   const navigate = useNavigate();

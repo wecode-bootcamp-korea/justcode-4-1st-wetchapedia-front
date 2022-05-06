@@ -7,6 +7,7 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import CollectionCard from './CollectionCard';
+import { BASE_URL } from '../../config';
 
 function Collection() {
   const [movieList, setMovieList] = useState([]);
@@ -16,7 +17,7 @@ function Collection() {
   const innerRef = useRef();
 
   useEffect(() => {
-    fetch(`/movie?grouping=category&partitionLimit=8`, {
+    fetch(`http://${BASE_URL}:8000/movie?grouping=category&partitionLimit=8`, {
       method: 'GET',
     })
       .then(res => res.json())

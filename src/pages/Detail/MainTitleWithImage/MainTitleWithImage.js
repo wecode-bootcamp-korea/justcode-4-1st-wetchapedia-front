@@ -10,6 +10,7 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import CommentDelete from './CommentDeleteModal';
 import CommentEditComponent from './CommentEditComponent';
+import { BASE_URL } from '../../../config';
 
 function MainTitleWithImage(props) {
   const [hover, setHover] = useState(0);
@@ -36,7 +37,8 @@ function MainTitleWithImage(props) {
   }, [rating]);
 
   function CheckWant() {
-    fetch(`/want/${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/want/${props.movieId}`, {
+      credentials: 'include',
       method: 'GET',
     })
       .then(res => res.json())
@@ -54,8 +56,9 @@ function MainTitleWithImage(props) {
   }
 
   function PostWant() {
-    fetch('/want/', {
+    fetch(`http://${BASE_URL}:8000/want/`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -81,6 +84,7 @@ function MainTitleWithImage(props) {
     }
     fetch(`/want`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -94,8 +98,9 @@ function MainTitleWithImage(props) {
   }
 
   function PostRating(val) {
-    fetch('/rating/', {
+    fetch(`http://${BASE_URL}:8000/rating/`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -112,8 +117,9 @@ function MainTitleWithImage(props) {
   }
 
   function Checkrating() {
-    fetch(`/rating/${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/rating/${props.movieId}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {
@@ -127,8 +133,9 @@ function MainTitleWithImage(props) {
   }
 
   function PatchRating(val) {
-    fetch(`/rating`, {
+    fetch(`http://${BASE_URL}:8000/rating`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -144,16 +151,18 @@ function MainTitleWithImage(props) {
   }
 
   function DeleteRating() {
-    fetch(`/rating/${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/rating/${props.movieId}`, {
       method: 'DELETE',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(props.RequestReloadRating());
   }
 
   useEffect(() => {
-    fetch(`/movie/images/${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/movie/images/${props.movieId}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {

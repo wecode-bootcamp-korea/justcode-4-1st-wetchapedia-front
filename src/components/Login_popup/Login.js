@@ -2,6 +2,8 @@ import styles from './Login.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { useEffect, useState, useRef } from 'react';
+import { BASE_URL } from '../../config';
+import { Router } from 'react-router-dom';
 
 const Login = props => {
   const [id, setId] = useState('');
@@ -63,7 +65,6 @@ const Login = props => {
       return true;
     }
   }
-
   const idInputBox = useRef();
   const pwInputBox = useRef();
   //inputbox 초기화하고 마우스커서 idbox로 옮기기
@@ -76,8 +77,9 @@ const Login = props => {
 
   // 서버 연결 로그인
   const handleLogin = () => {
-    fetch('/user/signin', {
+    fetch(`http://${BASE_URL}:8000/user/signin`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -96,6 +98,7 @@ const Login = props => {
         }
         // 성공시 url 이동
         else if (result.message === 'Sign in succesful') {
+          console.log(result.message);
           alert('로그인 성공!');
           close();
           window.location.reload();

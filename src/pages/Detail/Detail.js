@@ -7,12 +7,11 @@ import Comment_popup from './Comment_popup/Comment_popup';
 import Ad from './Ad/Ad';
 import Gallery from './Gallery/Gallery';
 import MainInfo from './MainInfo/MainInfo';
-
 import Comment from '../../components/Comment/Comment';
 import SimilarMovie from './SimilarMovie/SimilarMovie';
-
 import styles from './Detail.module.scss';
 import { setSelectionRange } from '@testing-library/user-event/dist/utils';
+import { BASE_URL } from '../../config';
 
 function Detail() {
   const params = useParams();
@@ -37,8 +36,9 @@ function Detail() {
   });
   const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
-    fetch('/user/verification', {
+    fetch(`http://${BASE_URL}:8000/user/verification`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(result => {
@@ -51,8 +51,9 @@ function Detail() {
   }, []);
 
   useEffect(() => {
-    fetch(`/movie/${params.id}`, {
+    fetch(`http://${BASE_URL}:8000/movie/${params.id}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {
@@ -60,8 +61,9 @@ function Detail() {
         setmovieInfo(movieInfo[0]);
       });
 
-    fetch(`/rating/movie-ratings/${params.id}`, {
+    fetch(`http://${BASE_URL}:8000/rating/movie-ratings/${params.id}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {

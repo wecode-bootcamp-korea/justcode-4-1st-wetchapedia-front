@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentSlash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 // import { text } from '@fortawesome/fontawesome-svg-core';
+import { BASE_URL } from '../../../config';
 
 const Comment_popup = props => {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -52,8 +53,9 @@ const Comment_popup = props => {
 
   //comment 가져오기
   useEffect(() => {
-    fetch(`/comment/content?movieId=${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/comment/content?movieId=${props.movieId}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(result => {
@@ -81,8 +83,9 @@ const Comment_popup = props => {
 
   //comment 추가 (검증 완)
   const commentAdd = () => {
-    fetch('/comment/', {
+    fetch(`http://${BASE_URL}:8000/comment/`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -106,8 +109,9 @@ const Comment_popup = props => {
   // comment 수정 (검증 완)
 
   const commentModify = () => {
-    fetch('/comment/', {
+    fetch(`http://${BASE_URL}:8000/comment/`, {
       method: 'PUT',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },

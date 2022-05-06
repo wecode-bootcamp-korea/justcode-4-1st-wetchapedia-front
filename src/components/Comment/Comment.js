@@ -6,12 +6,14 @@ import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { BASE_URL } from '../../config';
 
 const Comment = props => {
   const [commentList, setCommentList] = useState([]);
   useEffect(() => {
-    fetch(`/comment?movieId=${props.movieId}`, {
+    fetch(`http://${BASE_URL}:8000/comment?movieId=${props.movieId}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {

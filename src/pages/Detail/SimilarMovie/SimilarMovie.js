@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import styles from './SimilarMovie.module.scss';
 import SimilarMovieImage from './SimilarMovieImage';
+import { BASE_URL } from '../../../config';
 
 function SimilarMovie(props) {
   const [movieData, setMovieData] = useState([]);
   useEffect(() => {
-    fetch(`/movie?genre-name=${props.genre_name}`, {
+    fetch(`http://${BASE_URL}:8000/movie?genre-name=${props.genre_name}`, {
       method: 'GET',
     })
       .then(res => res.json())

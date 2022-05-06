@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './Search.module.scss';
 import SearchMovieImage from './SearchListImage';
+import { BASE_URL } from '../../config';
 
 function SearchMovie() {
   const [movieData, setMovieData] = useState([]);
@@ -9,7 +10,7 @@ function SearchMovie() {
   urlName = urlName.substr(1);
 
   useEffect(() => {
-    fetch(`/movie?search=${urlName}`, {
+    fetch(`http://${BASE_URL}:8000/movie?search=${urlName}`, {
       method: 'GET',
     })
       .then(res => res.json())

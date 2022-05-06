@@ -3,6 +3,7 @@ import ProductionList from './ProductionList';
 import InfoList from './InfoList';
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BASE_URL } from '../../../config';
 
 import {
   faChevronLeft,

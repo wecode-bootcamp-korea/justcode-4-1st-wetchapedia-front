@@ -1,5 +1,6 @@
 import styles from './CommentCard.module.scss';
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../../config';
 
 const CommentCard = props => {
   useEffect(() => {
@@ -21,8 +22,9 @@ const CommentCard = props => {
   }
 
   function postLike() {
-    fetch('/comment/like', {
+    fetch(`http://${BASE_URL}:8000/comment/like`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -37,8 +39,9 @@ const CommentCard = props => {
   }
 
   function getLike() {
-    fetch(`/comment/like?commentId=${props.id}`, {
+    fetch(`http://${BASE_URL}:8000/comment/like?commentId=${props.id}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {
@@ -51,8 +54,9 @@ const CommentCard = props => {
   }
 
   function checkLike() {
-    fetch(`/comment/like/check?commentId=${props.id}`, {
+    fetch(`http://${BASE_URL}:8000/comment/like/check?commentId=${props.id}`, {
       method: 'GET',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {
@@ -65,8 +69,9 @@ const CommentCard = props => {
   }
 
   function deleteLike() {
-    fetch(`/comment/like?commentId=${props.id}`, {
+    fetch(`http://${BASE_URL}:8000/comment/like?commentId=${props.id}`, {
       method: 'DELETE',
+      credentials: 'include',
     })
       .then(res => res.json())
       .then(data => {
